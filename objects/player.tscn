@@ -117,8 +117,11 @@ drag_bottom_margin = 0.25
 editor_draw_drag_margin = true
 
 [node name="WeaponSlash" type="AnimatedSprite2D" parent="." unique_id=2099038064]
+position = Vector2(20, 0)
 sprite_frames = SubResource("SpriteFrames_cvk82")
 animation = &"slashC"
 autoplay = "idle"
+frame = 6
+frame_progress = 1.0
 
 [connection signal="animation_finished" from="WeaponSlash" to="." method="_on_weapon_slash_animation_finished"]

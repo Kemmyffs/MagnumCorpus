@@ -13,11 +13,18 @@ public static class SpeedEnum
 public partial class Player : CharacterBody2D
 {
 	public float Speed = SpeedEnum.Default;
+	public float Dash = 0.0f;
+	public float Speed_DashDecay = 25.0f;
+	public float Speed_ChargeDecay = 10.0f;
+	public float animatedSprite_weaponSlash_Offset = 20;
 
-	public Vector2 attackDiretcion = Vector2.Zero;
+    private Godot.Vector2 lastDirection = Vector2.Right;
 
-	AnimatedSprite2D animatedSprite_weaponSlash;
-	public override void _Ready()
+    AnimatedSprite2D animatedSprite_weaponSlash;
+
+    public Vector2 LastDirection { get => lastDirection; set => lastDirection = value; }
+
+    public override void _Ready()
 	{
 		animatedSprite_weaponSlash = GetNode<AnimatedSprite2D>("WeaponSlash");
 	}
@@ -28,16 +35,14 @@ public partial class Player : CharacterBody2D
 		Vector2 velocity = Velocity;
 		if (Speed <= SpeedEnum.Dash && Speed >= SpeedEnum.Default)
 		{
-			Speed -= 25;
+			Speed -= Speed_DashDecay;
 		}
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector2 direction = Input.GetVector("plr_left", "plr_right", "plr_up", "plr_down");
 		if (direction != Vector2.Zero)
 		{
 			velocity = direction * Speed;
-			attackDiretcion = direction;
+			LastDirection = direction;
 		}
 		else
 		{
@@ -47,7 +52,44 @@ public partial class Player : CharacterBody2D
 
 		if (Input.IsActionJustReleased("plr_attack"))
 		{
-
+			//set position
+			var tempPos = animatedSprite_weaponSlash.Position;
+            tempPos.X = LastDirection.X * animatedSprite_weaponSlash_Offset;
+			tempPos.Y = LastDirection.Y * animatedSprite_weaponSlash_Offset;
+			animatedSprite_weaponSlash.Position = tempPos;
+			
+			//set rotation;
+			switch (LastDirection)
+			{
+				case Godot.Vector2(0,0):
+					animatedSprite_weaponSlash.RotationDegrees = 0;
+					break;
+				case Godot.Vector2(0,1):
+					animatedSprite_weaponSlash.RotationDegrees = 90;
+					break;
+				case Godot.Vector2(0,-1):
+					animatedSprite_weaponSlash.RotationDegrees = -90;
+					break;
+				case Godot.Vector2(1,1):
+					animatedSprite_weaponSlash.RotationDegrees = 45;
+					break;
+				case Godot.Vector2(1,-1):
+					animatedSprite_weaponSlash.RotationDegrees = -15;
+					break;
+				case Godot.Vector2(1,0):
+					animatedSprite_weaponSlash.RotationDegrees = 0;
+					break;
+				case Godot.Vector2(-1,0):
+					animatedSprite_weaponSlash.RotationDegrees = 180;
+					break;
+				case Godot.Vector2(-1,1):
+					animatedSprite_weaponSlash.RotationDegrees = 135;
+					break;
+				case Godot.Vector2(-1,-1):
+					animatedSprite_weaponSlash.RotationDegrees = -135;
+					break;
+			}
+            
 			animatedSprite_weaponSlash.Play("slashC");
 			Speed = SpeedEnum.Dash;
 		}
@@ -56,7 +98,7 @@ public partial class Player : CharacterBody2D
 		{
 			if (Speed > 0)
 			{
-				Speed -= 10;
+				Speed -= Speed_ChargeDecay;
 			}
 			else if (Speed <= 0)
 			{
