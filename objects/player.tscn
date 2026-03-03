@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://da2oo7qg5mxr2" path="res://textures/assets/slash/HolySlash_C/Frames/HolySlash_C_05.png" id="16_6ypbn"]
 [ext_resource type="Texture2D" uid="uid://u8302cexpqp1" path="res://textures/assets/slash/HolySlash_C/Frames/HolySlash_C_06.png" id="17_7rsoo"]
 [ext_resource type="Texture2D" uid="uid://c6d2bbe66l3lr" path="res://textures/assets/slash/HolySlash_C/Frames/HolySlash_C_07.png" id="18_lywsn"]
+[ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="19_2sux5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykyjo"]
 height = 38.0
@@ -95,6 +96,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" unique_id=1962636832]
 script = ExtResource("1_ykyjo")
+BaseSpeed = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=94244831]
 position = Vector2(0, 1)
@@ -119,9 +121,9 @@ editor_draw_drag_margin = true
 [node name="WeaponSlash" type="AnimatedSprite2D" parent="." unique_id=2099038064]
 position = Vector2(20, 0)
 sprite_frames = SubResource("SpriteFrames_cvk82")
-animation = &"slashC"
+animation = &"idle"
 autoplay = "idle"
-frame = 6
-frame_progress = 1.0
+
+[node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
 
 [connection signal="animation_finished" from="WeaponSlash" to="." method="_on_weapon_slash_animation_finished"]
