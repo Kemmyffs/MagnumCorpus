@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cnglm57qek8ae" path="res://textures/assets/char/IDLE/idle_down.png" id="1_eqqp1"]
 [ext_resource type="Script" uid="uid://dx3fdjlijosyw" path="res://scripts/Player.cs" id="1_ykyjo"]
+[ext_resource type="PackedScene" uid="uid://cinkpl0oj7otp" path="res://scenes/UI/hud.tscn" id="3_bhqug"]
 [ext_resource type="Texture2D" uid="uid://cuwxq2c4twt50" path="res://textures/assets/slash/HolySlash_A/Frames/HolySlash_A_01.png" id="3_s4hvt"]
 [ext_resource type="Texture2D" uid="uid://hrlq140v2tui" path="res://textures/assets/slash/HolySlash_A/Frames/HolySlash_A_02.png" id="4_2sux5"]
 [ext_resource type="Texture2D" uid="uid://brivdni45yhu3" path="res://textures/assets/slash/HolySlash_A/Frames/HolySlash_A_03.png" id="5_iqfnf"]
@@ -19,9 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://u8302cexpqp1" path="res://textures/assets/slash/HolySlash_C/Frames/HolySlash_C_06.png" id="17_7rsoo"]
 [ext_resource type="Texture2D" uid="uid://c6d2bbe66l3lr" path="res://textures/assets/slash/HolySlash_C/Frames/HolySlash_C_07.png" id="18_lywsn"]
 [ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="19_2sux5"]
+[ext_resource type="PackedScene" uid="uid://c4vu8ia4v14x1" path="res://components/health_component.tscn" id="20_iqfnf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykyjo"]
-height = 38.0
+radius = 9.0
+height = 26.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cvk82"]
 animations = [{
@@ -94,12 +97,21 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2sux5"]
+radius = 7.0
+height = 32.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1962636832]
+motion_mode = 1
 script = ExtResource("1_ykyjo")
-BaseSpeed = 100.0
+BaseSpeed = 150.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643263794]
+
+[node name="HUD" parent="CanvasLayer" unique_id=128909635 instance=ExtResource("3_bhqug")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=94244831]
-position = Vector2(0, 1)
+position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_ykyjo")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1456656584]
@@ -107,9 +119,9 @@ texture = ExtResource("1_eqqp1")
 hframes = 8
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1221219680]
-visible = false
 zoom = Vector2(2, 2)
-position_smoothing_speed = 10.0
+process_callback = 0
+position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.25
@@ -125,5 +137,15 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
+
+[node name="HurtBoxArea" type="Area2D" parent="." unique_id=1312627019]
+collision_layer = 2
+collision_mask = 2
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBoxArea" unique_id=487245117]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_2sux5")
+
+[node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("20_iqfnf")]
 
 [connection signal="animation_finished" from="WeaponSlash" to="." method="_on_weapon_slash_animation_finished"]

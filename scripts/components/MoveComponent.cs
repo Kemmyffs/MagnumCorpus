@@ -1,11 +1,13 @@
+using System;
 using Godot;
 
 public partial class MoveComponent : Node
 {
-	private Character _character;
+	private Character _parent;
+	private CollisionShape2D MoveCollisionShape;
 
 	[Export] public float BaseSpeed = 150;
-	[Export] public float DashForce = 450;
+	[Export] public float DashForce = 200;
 	[Export] public float DashDecay = 750; // higher -> stops faster
 	[Export] public float Acceleration = 2000f;
 	[Export] public float Friction = 2000f;
@@ -13,21 +15,26 @@ public partial class MoveComponent : Node
 	private Vector2 _dashVelocity = Vector2.Zero;
 
 	private bool _isCharging = false;
+	private bool _isDashing = false;
 
 	public Vector2 DesiredDirection { get; set; } = Vector2.Zero;
 
 	public override void _Ready()
 	{
-		_character = GetParent<Character>();
-		//BaseSpeed = _character.BaseSpeed;
+		_parent = GetParent<Character>();
+		BaseSpeed = _parent.BaseSpeed;
+		MoveCollisionShape = _parent.GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		float d = (float)delta;
-		Vector2 velocity = _character.Velocity;
 
-		//If charging -> slow to full stop
+		float d = (float)delta;
+		Vector2 velocity = _parent.Velocity;
+
+		_isDashing = _dashVelocity.Length() > 0;
+		//Charge
+		//Transitions into either a full stop(not moving) or the default moving speed (if moving)
 		if (_isCharging)
 		{
 			velocity = velocity.MoveToward(
@@ -55,7 +62,6 @@ public partial class MoveComponent : Node
 			}
 		}
 
-		//Dash overrides everything
 		if (_dashVelocity.Length() > 0)
 		{
 			velocity += _dashVelocity;
@@ -65,12 +71,33 @@ public partial class MoveComponent : Node
 				DashDecay * d
 			);
 		}
+
+		if (_isDashing)
+		{
+			_parent.SetCollisionMaskValue(1, false);
+			_parent.SetCollisionMaskValue(2, true);
+			_parent.SetCollisionLayerValue(1, false);
+			_parent.SetCollisionLayerValue(2, true);
+		}
+		else
+		{
+			_parent.SetCollisionMaskValue(1, true);
+			_parent.SetCollisionMaskValue(2, false);
+			_parent.SetCollisionLayerValue(1, true);
+			_parent.SetCollisionLayerValue(2, false);
+		}
+
+		//Smoothing transition between a dash move and a regular move
+		//so the player doesn't need to wait for the dash to end before he can move (which caused stops after dashes)
 		Vector2 combined = velocity + _dashVelocity;
 		if (combined.Length() > BaseSpeed + _dashVelocity.Length())
 			combined = combined.Normalized() * (BaseSpeed + _dashVelocity.Length());
 		velocity = combined;
-		_character.Velocity = velocity;
-		_character.MoveAndSlide();
+		//
+
+		_parent.Velocity = velocity;
+
+		_parent.MoveAndSlide();
 	}
 
 	public void Dash(Vector2 direction)
@@ -89,5 +116,10 @@ public partial class MoveComponent : Node
 	public void StopCharge()
 	{
 		_isCharging = false;
+	}
+
+	public void _DashCollisionLayer()
+	{
+		
 	}
 }

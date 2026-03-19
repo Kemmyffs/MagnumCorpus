@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ba1ywadudjpsd"]
+
+[ext_resource type="Script" uid="uid://bqfdt05ri6iim" path="res://scripts/RoomMapIcon.cs" id="1_82kr5"]
+[ext_resource type="Texture2D" uid="uid://dhmj8lrc02lgl" path="res://textures/programmerArt/demoWall.png" id="2_rvivb"]
+[ext_resource type="Texture2D" uid="uid://bcp2r61us5b16" path="res://textures/programmerArt/bridge.png" id="3_8gusp"]
+
+[node name="RoomMapIcon" type="Node2D" unique_id=1731066986]
+modulate = Color(0, 1, 0, 1)
+script = ExtResource("1_82kr5")
+
+[node name="RoomSprite" type="Sprite2D" parent="." unique_id=518748200]
+texture = ExtResource("2_rvivb")
+
+[node name="BridgeBottomSprite" type="Sprite2D" parent="." unique_id=1438373166]
+visible = false
+position = Vector2(0, 24)
+rotation = 1.5707964
+texture = ExtResource("3_8gusp")
+
+[node name="BridgeRightSprite" type="Sprite2D" parent="." unique_id=225122727]
+visible = false
+position = Vector2(24, 0)
+texture = ExtResource("3_8gusp")

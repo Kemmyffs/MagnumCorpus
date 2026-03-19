@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://de08hpuk2aafl"]
+
+[ext_resource type="Script" uid="uid://b14v7wsu1wavs" path="res://scripts/DungeonGenerator.cs" id="1_wnh5j"]
+[ext_resource type="PackedScene" uid="uid://cbqloukas2bp6" path="res://objects/rooms/room_prefab.tscn" id="2_1i4yp"]
+[ext_resource type="PackedScene" uid="uid://ba1ywadudjpsd" path="res://objects/rooms/room_map.tscn" id="2_u0h3c"]
+[ext_resource type="PackedScene" uid="uid://cxslelbcdvgcv" path="res://objects/player.tscn" id="3_s1qmf"]
+
+[node name="DungeonGenerator" type="Node2D" unique_id=1318291132]
+script = ExtResource("1_wnh5j")
+WorldSize = Vector2i(5, 5)
+NumberOfRooms = 10
+RoomMapIconPrefab = ExtResource("2_u0h3c")
+RoomPrefab = ExtResource("2_1i4yp")
+
+[node name="MapRoot" type="Node2D" parent="." unique_id=41446376]
+unique_name_in_owner = true
+
+[node name="Player" parent="." unique_id=1962636832 instance=ExtResource("3_s1qmf")]
+position = Vector2(288, 168)
+
+[connection signal="FinishedGeneration" from="." to="Player" method="_on_dungeon_generator_finished_generation"]

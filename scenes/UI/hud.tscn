@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cinkpl0oj7otp"]
+
+[ext_resource type="Texture2D" uid="uid://dhjb8cpgy8o4j" path="res://textures/UI/PA_EnemiesLeft.png" id="1_c4vmg"]
+[ext_resource type="Script" uid="uid://bkun1btu47wlc" path="res://scripts/Hud.cs" id="1_rd3kb"]
+
+[node name="HUD" type="Control" unique_id=128909635]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rd3kb")
+
+[node name="Label" type="Label" parent="." unique_id=1795192139]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Cau tvoje HP je:"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=629346623]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 464.0
+offset_right = 96.0
+offset_bottom = 544.0
+scale = Vector2(2, 2)
+texture = ExtResource("1_c4vmg")
+
+[node name="CenterContainer" type="CenterContainer" parent="TextureRect" unique_id=743617482]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+
+[node name="Label3" type="Label" parent="TextureRect/CenterContainer" unique_id=684202143]
+layout_mode = 2
+text = "10 / 10"
+
+[node name="MapCenterContainer" type="CenterContainer" parent="." unique_id=2045795885]
+layout_mode = 0
+offset_left = 896.0
+offset_right = 1152.0
+offset_bottom = 256.0
+
+[node name="MapTextureRect" type="Node2D" parent="MapCenterContainer" unique_id=1916121844]
+position = Vector2(128, 128)
