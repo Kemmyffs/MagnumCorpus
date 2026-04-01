@@ -33,7 +33,7 @@ public partial class DungeonGenerator : Node2D
         GenerateDungeonMap();
         EmitFlattenedGrid(RoomGrid_Icons);
         setFloorColor(Colors.Green);
-        
+
     }
 
     public void GenerateDungeonMap()
@@ -106,10 +106,14 @@ public partial class DungeonGenerator : Node2D
 
         //PREFABS
         RoomPrefab newRoomPrefab = RoomPrefab.Instantiate<RoomPrefab>();
+
         RoomGrid_Prefabs[pos.X, pos.Y] = newRoomPrefab;
         int TrueRoomSize = roomTileCount * tileSizePx;
         newRoomPrefab.Position = new Vector2(pos.X * (RoomOffset + TrueRoomSize), pos.Y * (RoomOffset + TrueRoomSize));
         MapRoot.AddChild(newRoomPrefab);
+        newRoomPrefab.RandomizeFloor();
+        newRoomPrefab.SetDoor(Vector2.Up, false);
+        newRoomPrefab.SetDoor(Vector2.Left, false);
 
     }
 
@@ -145,6 +149,33 @@ public partial class DungeonGenerator : Node2D
     private void GenerateBridges()
     {
 
+        for (int x = 0; x < WorldSize.X; x++)
+        {
+            for (int y = 0; y < WorldSize.Y; y++)
+            {
+                var currentRoom = RoomGrid_Prefabs[x, y];
+                if (currentRoom == null) continue;
+                bool[] bridges_TopDownLeftRight = new bool[4];
+                
+                // Right
+                if (x + 1 < WorldSize.X && RoomGrid_Prefabs[x + 1, y] != null)  bridges_TopDownLeftRight[3] = true;
+                // Left
+                if (x - 1 >= 0 && RoomGrid_Prefabs[x - 1, y] != null)           bridges_TopDownLeftRight[2] = true;
+                // Down
+                if (y + 1 < WorldSize.Y && RoomGrid_Prefabs[x, y + 1] != null)  bridges_TopDownLeftRight[1] = true;
+                // Up
+                if (y - 1 >= 0 && RoomGrid_Prefabs[x, y - 1] != null)           bridges_TopDownLeftRight[0] = true;
+
+
+                currentRoom.GenerateBridges(bridges_TopDownLeftRight[3], bridges_TopDownLeftRight[1]);
+                
+                currentRoom.SetDoor(Vector2.Up, bridges_TopDownLeftRight[0]);
+                currentRoom.SetDoor(Vector2.Down, bridges_TopDownLeftRight[1]);
+                currentRoom.SetDoor(Vector2.Left, bridges_TopDownLeftRight[2]);
+                currentRoom.SetDoor(Vector2.Right, bridges_TopDownLeftRight[3]);
+            }
+        }
+        /*
         //icons
         for (int x = 0; x < WorldSize.X; x++)
         {
@@ -166,6 +197,7 @@ public partial class DungeonGenerator : Node2D
                 }
             }
         }
+        */
 
         //
     }
@@ -182,10 +214,11 @@ public partial class DungeonGenerator : Node2D
         {
             for (y = 0; y < height; y++)
             {
-                if (grid[x,y] == null)
+                if (grid[x, y] == null)
                 {
                     result[x * height + y] = true;
-                } else
+                }
+                else
                 {
                     result[x * height + y] = false;
                 }
