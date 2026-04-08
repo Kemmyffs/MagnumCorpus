@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://ftu2g2b75tyw"]
 
 [ext_resource type="Texture2D" uid="uid://b6jxa1jjttsnd" path="res://textures/assets/Training Dummy Sprite Sheet.png" id="1_ocgie"]
+[ext_resource type="Script" uid="uid://cdl0yiy8vdyxh" path="res://objects/TrainingDummy.cs" id="1_pnt1b"]
 [ext_resource type="PackedScene" uid="uid://c4vu8ia4v14x1" path="res://components/health_component.tscn" id="2_uynn4"]
+[ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="4_avl7w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uynn4"]
 radius = 11.0
 
-[node name="TrainingDummy" type="StaticBody2D" unique_id=66404792]
+[node name="TrainingDummy" type="CharacterBody2D" unique_id=1889153279]
+script = ExtResource("1_pnt1b")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1656794349]
 texture = ExtResource("1_ocgie")
@@ -17,3 +20,5 @@ vframes = 3
 shape = SubResource("CircleShape2D_uynn4")
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("2_uynn4")]
+
+[node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("4_avl7w")]

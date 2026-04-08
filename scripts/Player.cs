@@ -45,14 +45,4 @@ public partial class Player : Character
 		//TextureRect mapTextureRect = GetNode<TextureRect>("MapTextureRect");
 	}
 
-	public TextureProgressBar GetHealthBar()
-	{
-		return GetNode<Hud>("CanvasLayer//HUD").HealthBar;
-	}
-
-	public TextureProgressBar GetSpecialbar()
-	{
-		return GetNode<Hud>("CanvasLayer//HUD").SpecialBar;
-	}
-
 }
