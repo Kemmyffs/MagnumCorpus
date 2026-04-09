@@ -115,6 +115,5 @@ shape = SubResource("RectangleShape2D_57qw6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1615105972]
 sprite_frames = SubResource("SpriteFrames_timn1")
-animation = &"plr_slash"
-frame = 5
+animation = &"idle"
 flip_v = true

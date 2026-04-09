@@ -66,9 +66,5 @@ public partial class AttackComponent : Node2D
 		await ToSignal(AttackAnimatedSprite, AnimatedSprite2D.SignalName.AnimationFinished);
 		HitboxShape.Disabled = true;
 		CanAttack = true;
-
-		//
-		// Nevypínat monitorable v AttackComponent, ale koukat jestli "útočí"
-		//
 	}
 }

@@ -45,6 +45,5 @@ drag_bottom_margin = 0.15
 editor_draw_drag_margin = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=94244831]
-visible = false
 position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_ykyjo")

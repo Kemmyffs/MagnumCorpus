@@ -35,7 +35,7 @@ public partial class DungeonGenerator : Node2D
 
         GenerateDungeonMap();
         EmitFlattenedGrid(RoomGrid_Icons);
-        setFloorColor(Colors.Green);
+        setFloorColor(new Color(0.0f, 1.419f, 0.783f));
 
 
     }
@@ -120,6 +120,7 @@ public partial class DungeonGenerator : Node2D
         newRoomPrefab.Position = new Vector2(pos.X * (RoomOffset + TrueRoomSize), pos.Y * (RoomOffset + TrueRoomSize));
         MapRoot.AddChild(newRoomPrefab);
         newRoomPrefab.RandomizeFloor();
+        newRoomPrefab.GenerateEnemies(5);
         //newRoomPrefab.SetDoor(Vector2.Up, false);
         //newRoomPrefab.SetDoor(Vector2.Left, false);
 
@@ -239,7 +240,11 @@ public partial class DungeonGenerator : Node2D
 
     private void setFloorColor(Color desiredColor)
     {
-        MapRoot.Modulate = desiredColor;
+        //MapRoot.Modulate = desiredColor;
+        foreach (RoomPrefab room in MapRoot.GetChildren())
+        {
+            room.TileMapBase.Modulate= desiredColor;
+        }
     }
     
 }
