@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MagnumCorpus"
-run/main_scene="uid://de08hpuk2aafl"
+run/main_scene="uid://b27g5ouysbs4h"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="uid://rjea5gdkn565"
 

@@ -28,6 +28,11 @@ public partial class Player : Character
 			_moveComponent.StopCharge();
 			_moveComponent.Dash(LastDirection);
 		}
+
+		if (Input.IsActionJustPressed("plr_attack"))
+		{
+			if(_attackComponent.CanAttack) _attackComponent.Attack(LastDirection);
+		}
 		
 		if (Input.IsKeyPressed(Key.Escape))
 		{

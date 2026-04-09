@@ -3,11 +3,11 @@ using System;
 
 public partial class HealthComponent : Node2D
 {
-
 	private Character _parent;
 	private TextureProgressBar HealthBar;
 	private TextureProgressBar SpecialBar;
-	public int MaxHealth;
+	private Area2D Hurtbox;
+	[Export] public int MaxHealth;
 	public int CurrentHealth { get; set; }
 	[Export] public int SpecialBarRechargeTime { get; set; }
 	public double SpecialBarCurrentValue {get; set;}
@@ -18,12 +18,15 @@ public partial class HealthComponent : Node2D
 	{
 		_parent = GetParent<Character>();
 		MaxHealth = _parent.MaxHealth;
-		
+		Hurtbox = GetNode<Area2D>("Hurtbox");
+
+		Hurtbox.AreaEntered += OnAreaEntered;
+
 		if (_parent.Name == "Player")
 		{
 			
-			HealthBar = _parent.GetNode<Hud>("CanvasLayer//HUD").HealthBar;
-			SpecialBar = _parent.GetNode<Hud>("CanvasLayer//HUD").SpecialBar;
+			HealthBar = _parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//HealthBar");
+			SpecialBar = _parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//SpecialBar");
 
 			GetNode<TextureProgressBar>("HealthBar").Visible = false;
 			GetNode<TextureProgressBar>("SpecialBar").Visible = false;
@@ -36,9 +39,9 @@ public partial class HealthComponent : Node2D
 			SpecialBar = GetNode<TextureProgressBar>("SpecialBar");
 		}
 
-		CurrentHealth = MaxHealth;
 		HealthBar.MaxValue = MaxHealth;
 		HealthBar.MinValue = 0;
+		CurrentHealth = MaxHealth;
 		UpdateHealthBar();
 
 	}
@@ -54,11 +57,14 @@ public partial class HealthComponent : Node2D
 	public void Damage(int dmg)
 	{
 		CurrentHealth -= dmg;
+		Console.WriteLine(CurrentHealth);
+		UpdateHealthBar();
 	}
 
 	public void Heal(int amount)
 	{
 		CurrentHealth = Math.Max(CurrentHealth + amount, MaxHealth);
+		UpdateHealthBar();
 	}
 	public void UpdateHealthBar()
 	{
@@ -68,6 +74,21 @@ public partial class HealthComponent : Node2D
 	public void UpdateSpecialBar()
 	{
 		//SpecialBar.Value = SpecialBarCurrentValue;
+	}
+
+	private void OnAreaEntered(Area2D area)
+	{
+		if(area.Name == "Hitbox")
+		{
+			Character attacker = area.GetParent().GetParent<Character>();
+			Damage(attacker._attackComponent.Damage);
+			
+			
+		}
+		//
+		// Nevypínat monitorable v AttackComponent, ale koukat jestli "útočí"
+		//
+		
 	}
 	
 }

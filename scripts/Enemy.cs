@@ -6,7 +6,7 @@ public partial class Enemy : Character
 
     public override void _Ready()
     {
-		//MoveCollisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+
     }
 
 

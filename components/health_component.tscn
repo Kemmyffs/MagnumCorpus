@@ -21,29 +21,37 @@ load_path = "res://.godot/imported/healthbar.png-12ab45cd2da4d56479cad6362028130
 atlas = SubResource("CompressedTexture2D_awnif")
 region = Rect2(28, 6, 24, 2)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsl15"]
+
 [node name="HealthComponent" type="Node2D" unique_id=1008080549]
 script = ExtResource("1_t2tvt")
 
 [node name="Background" type="TextureRect" parent="." unique_id=532802650]
 offset_left = -14.0
 offset_top = 13.0
-offset_right = 27.0
-offset_bottom = 35.0
+offset_right = 14.0
+offset_bottom = 23.0
 texture = SubResource("AtlasTexture_tsl15")
 stretch_mode = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="." unique_id=515115747]
 offset_left = -12.0
 offset_top = 15.0
-offset_right = 28.0
-offset_bottom = 55.0
+offset_right = 12.0
+offset_bottom = 18.0
 value = 80.0
 texture_progress = SubResource("AtlasTexture_d07gh")
 
 [node name="SpecialBar" type="TextureProgressBar" parent="." unique_id=461186392]
 offset_left = -12.0
 offset_top = 19.0
-offset_right = 28.0
-offset_bottom = 59.0
+offset_right = 12.0
+offset_bottom = 22.0
 value = 50.0
 texture_progress = SubResource("AtlasTexture_m8208")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1219289255]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=282062039]
+unique_name_in_owner = true
+shape = SubResource("CapsuleShape2D_tsl15")
