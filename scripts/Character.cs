@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using Godot;
 
 public partial class Character : CharacterBody2D
@@ -8,11 +9,8 @@ public partial class Character : CharacterBody2D
     public HealthComponent _healthComponent;
     public AttackComponent _attackComponent;
     public CollisionShape2D MoveCollisionShape;
-
 	public float Speed => BaseSpeed;
-
     public bool IsAlive { get; protected set; } = true;
-
 	public Vector2 FacingDirection {get; protected set;}
 
     public override void _Ready()
@@ -26,6 +24,7 @@ public partial class Character : CharacterBody2D
 
     public virtual void Die()
     {
+        
         QueueFree();
     }
 

@@ -4,13 +4,15 @@ using System;
 
 public partial class Enemy : Character
 {
-	private Character Target;
+	private Player Target;
+	[Signal] public delegate void JustDiedEventHandler();
 
-    public override void _Ready()
-    {
-        base._Ready();
-    }
-
+	public override void _Ready()
+	{
+		base._Ready();
+		SetTarget();
+		Connect("JustDied", new Callable(Target.GetNode<CanvasLayer>("CanvasLayer").GetNode<Hud>("HUD"), "OnEnemyDeath"));
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		if(!IsInstanceValid(Target)) return;
@@ -24,12 +26,14 @@ public partial class Enemy : Character
 	{
 		try
 		{
-			Target = GetParent().GetParent().GetParent().GetNode<Character>("Player");
-			Console.WriteLine($"Mam hrace! Tady je:{Target}");
+			Target = GetParent().GetParent().GetParent().GetNode<Player>("Player");
 		}
-		catch (System.NullReferenceException)
-		{
-			Console.WriteLine("Neni hrac k nalezeni wtf");
-		}
+		catch (System.NullReferenceException) { }
 	}
+
+    public override void Die()
+    {
+		EmitSignal(SignalName.JustDied);
+        base.Die();
+    }
 }

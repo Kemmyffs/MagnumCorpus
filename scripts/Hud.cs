@@ -4,7 +4,7 @@ using System;
 public partial class Hud : Control
 {
 
-	public TileMapLayer tileMapLayer;
+	public TileMapLayer TileMapLayer;
 	private Label EnemiesLeftLabel;
 	private bool[,] roomMapIconGrid;
 
@@ -14,21 +14,16 @@ public partial class Hud : Control
 
 	public override void _Ready()
 	{
-		tileMapLayer = GetNode<TileMapLayer>("MapCenterContainer//TileMapLayer");
-		EnemiesLeftLabel = GetNode<Label>("TextureRect//EnemiesLeftLabel");
-		PlayerParent = GetParent<CanvasLayer>().GetParent<Character>();		
+		TileMapLayer = GetNode<TileMapLayer>("MapCenterContainer//TileMapLayer");
+		EnemiesLeftLabel = GetNode<Label>("TextureRect//CenterContainer//EnemiesLeftLabel");
+		PlayerParent = GetParent<CanvasLayer>().GetParent<Character>();
 		HealthBar = GetNode<TextureProgressBar>("TextureRect//HealthBar"); //TODO
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
-		updateHUD();
 	}
 
-
-	public async void updateHUD()
+	public async void UpdateEnemyCounter()
 	{
-		await ToSignal(PlayerParent, SignalName.Ready);
-		Console.WriteLine(PlayerParent._healthComponent.CurrentHealth);
-		
-
+		EnemiesLeftLabel.Text = $"{GlobalScript.FloorCurrentEnemyCount}/{GlobalScript.FloorTotalEnemyCount}";
 	}
 	public void GenerateMinimap(bool[] grid, int x, int y, int height)
 	{
@@ -40,7 +35,7 @@ public partial class Hud : Control
 			{
 				if (!roomMapIconGrid[i, j])
 				{
-					tileMapLayer.SetCell(new Vector2I(i, j), 0, new Vector2I(0, 0), 0);
+					TileMapLayer.SetCell(new Vector2I(i, j), 0, new Vector2I(0, 0), 0);
 				}
 			}
 		}
@@ -62,6 +57,12 @@ public partial class Hud : Control
 		}
 
 		return reconstructed;
+	}
+
+	public void OnEnemyDeath()
+	{
+		GlobalScript.FloorCurrentEnemyCount--;
+		UpdateEnemyCounter();
 	}
 
 }

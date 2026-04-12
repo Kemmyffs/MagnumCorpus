@@ -1,44 +1,60 @@
 using Godot;
-using Godot.NativeInterop;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public partial class DungeonGenerator : Node2D
 {
+    [Signal] public delegate void FinishedGenerationEventHandler(Array<bool> grid, int x, int y, int height);
+    [Signal] public delegate void CalculatedTotalEnemyCountEventHandler();
+
+    
+    [ExportGroup("Floor settings")]
     [Export] Vector2I WorldSize;
     [Export] int NumberOfRooms;
     [Export] public PackedScene RoomMapIconPrefab;
     [Export] public PackedScene RoomPrefab;
-    [Export] public int roomTileCount;
-    [Export] public int tileSizePx;
-    [Export] private int RoomOffset;
+    [Export] public int RoomTileCount;
+    [Export] public int TileSizePx;
+    [Export] private int RoomOffset;  
+    [ExportGroup("Enemy settings")]
+    [Export] public int TotalFloorEnemyCount;
+    [Export] private int MaxEnemiesPerRoom;
+    private int EnemiesSpawned = 0;
     private Vector2I CenterRoomCoords;
 
-    [Signal] public delegate void FinishedGenerationEventHandler(Array<bool> grid, int x, int y, int height);
-
+    
     private Node2D MapRoot;
     private RoomMapIcon[,] RoomGrid_Icons;
     private RoomPrefab[,] RoomGrid_Prefabs;
     private Character PlayerNode;
-
-    private Random rng = new Random();
+    private Random Rng = new Random();
 
     public override void _Ready()
     {
+        PlayerNode = GetNode<Character>("Player");
+        Connect("CalculatedTotalEnemyCount", new Callable(PlayerNode.GetNode<CanvasLayer>("CanvasLayer").GetNode<Hud>("HUD"), "UpdateEnemyCounter"));
+
         MapRoot = GetNode<Node2D>("MapRoot");
         RoomGrid_Icons = new RoomMapIcon[WorldSize.X, WorldSize.Y];
         RoomGrid_Prefabs = new RoomPrefab[WorldSize.X, WorldSize.Y];
-        PlayerNode = GetNode<Character>("Player");
         CenterRoomCoords = new Vector2I(WorldSize.X / 2, WorldSize.Y / 2);
 
         GenerateDungeonMap();
         EmitFlattenedGrid(RoomGrid_Icons);
-        setFloorColor(new Color(0.0f, 1.419f, 0.783f));
-
-
+        SetFloorColor(new Color(0.0f, 1.419f, 0.783f));
+        CalculateEnemyCounts();
     }
+
+    private void CalculateEnemyCounts()
+    {
+        GlobalScript.FloorTotalEnemyCount = EnemiesSpawned;
+        GlobalScript.FloorCurrentEnemyCount = EnemiesSpawned;
+        EmitSignal("CalculatedTotalEnemyCount");
+    }
+
 
     public void GenerateDungeonMap()
     {
@@ -48,14 +64,12 @@ public partial class DungeonGenerator : Node2D
         PlaceRoom(CenterRoomCoords);
         placedRooms.Add(CenterRoomCoords);
         Vector2 roomV2 = placedRooms.First();
-        frontier.Add(CenterRoomCoords);
-
-        
+        frontier.Add(CenterRoomCoords);        
 
         while (placedRooms.Count < NumberOfRooms && frontier.Count > 0)
         {
             // Pick random frontier room
-            Vector2I baseRoom = frontier[rng.Next(frontier.Count)];
+            Vector2I baseRoom = frontier[Rng.Next(frontier.Count)];
 
             List<Vector2I> directions = new()
             {
@@ -66,7 +80,7 @@ public partial class DungeonGenerator : Node2D
             };
 
             // Shuffle directions
-            directions = directions.OrderBy(x => rng.Next()).ToList();
+            directions = directions.OrderBy(x => Rng.Next()).ToList();
 
             bool placed = false;
 
@@ -93,19 +107,18 @@ public partial class DungeonGenerator : Node2D
             if (!placed)
                 frontier.Remove(baseRoom);
         }
-        int pos = (CenterRoomCoords.X * tileSizePx * roomTileCount) + ((tileSizePx * roomTileCount)/2);
+        int pos = (CenterRoomCoords.X * TileSizePx * RoomTileCount) + (TileSizePx * RoomTileCount);
         PlayerNode.GlobalPosition = new Vector2(pos, pos);
         GenerateBridges();
 
-
+        CalculateEnemyCounts();
     }
-
     private void PlaceRoom(Vector2I pos)
     {
         //ICONS
         RoomMapIcon newRoom = RoomMapIconPrefab.Instantiate<RoomMapIcon>();
         RoomGrid_Icons[pos.X, pos.Y] = newRoom;
-        /* newRoom.Position = new Vector2(pos.X * (tileSizePx), pos.Y * tileSizePx);
+        /* newRoom.Position = new Vector2(pos.X * (TileSizePx), pos.Y * TileSizePx);
 
         if (isStart)
             newRoom.SetMapIconColor(newRoom.EnterColor);
@@ -116,33 +129,31 @@ public partial class DungeonGenerator : Node2D
         RoomPrefab newRoomPrefab = RoomPrefab.Instantiate<RoomPrefab>();
 
         RoomGrid_Prefabs[pos.X, pos.Y] = newRoomPrefab;
-        int TrueRoomSize = roomTileCount * tileSizePx;
+        int TrueRoomSize = RoomTileCount * TileSizePx;
         newRoomPrefab.Position = new Vector2(pos.X * (RoomOffset + TrueRoomSize), pos.Y * (RoomOffset + TrueRoomSize));
         MapRoot.AddChild(newRoomPrefab);
         newRoomPrefab.RandomizeFloor();
-        newRoomPrefab.GenerateEnemies(1);
-        //newRoomPrefab.SetDoor(Vector2.Up, false);
-        //newRoomPrefab.SetDoor(Vector2.Left, false);
+        int TempEnemyCount = Rng.Next(2, MaxEnemiesPerRoom);
+        newRoomPrefab.GenerateEnemies(TempEnemyCount);
 
+        EnemiesSpawned+=TempEnemyCount;
     }
-
     private bool IsInside(Vector2I pos)
     {
         return pos.X >= 0 && pos.X < WorldSize.X &&
                pos.Y >= 0 && pos.Y < WorldSize.Y;
     }
-
     private int CountNeighbors(Vector2I pos)
     {
         int count = 0;
 
-        Vector2I[] directions = new Vector2I[]
-        {
+        Vector2I[] directions =
+        [
             Vector2I.Up,
             Vector2I.Down,
             Vector2I.Left,
             Vector2I.Right
-        };
+        ];
 
         foreach (var dir in directions)
         {
@@ -184,31 +195,6 @@ public partial class DungeonGenerator : Node2D
                 currentRoom.SetDoor(Vector2.Right, bridges_TopDownLeftRight[3]);
             }
         }
-        /*
-        //icons
-        for (int x = 0; x < WorldSize.X; x++)
-        {
-            for (int y = 0; y < WorldSize.Y; y++)
-            {
-                var currentRoom = RoomGrid_Icons[x, y];
-                if (currentRoom == null) continue;
-
-                // Right
-                if (x + 1 < WorldSize.X && RoomGrid_Icons[x + 1, y] != null)
-                {
-                    currentRoom.showBridge(true);
-                }
-
-                // Down
-                if (y + 1 < WorldSize.Y && RoomGrid_Icons[x, y + 1] != null)
-                {
-                    currentRoom.showBridge(false);
-                }
-            }
-        }
-        */
-
-        //
     }
 
     void EmitFlattenedGrid(RoomMapIcon[,] grid)
@@ -238,7 +224,7 @@ public partial class DungeonGenerator : Node2D
 
     }
 
-    private void setFloorColor(Color desiredColor)
+    private void SetFloorColor(Color desiredColor)
     {
         //MapRoot.Modulate = desiredColor;
         foreach (RoomPrefab room in MapRoot.GetChildren())
@@ -246,5 +232,6 @@ public partial class DungeonGenerator : Node2D
             room.TileMapBase.Modulate= desiredColor;
         }
     }
+
     
 }

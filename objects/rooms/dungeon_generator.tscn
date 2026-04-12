@@ -11,8 +11,11 @@ WorldSize = Vector2i(5, 5)
 NumberOfRooms = 10
 RoomMapIconPrefab = ExtResource("2_u0h3c")
 RoomPrefab = ExtResource("2_1i4yp")
-roomTileCount = 32
-tileSizePx = 16
+RoomTileCount = 26
+TileSizePx = 16
+RoomOffset = 96
+TotalFloorEnemyCount = 10
+MaxEnemiesPerRoom = 5
 
 [node name="MapRoot" type="Node2D" parent="." unique_id=41446376]
 unique_name_in_owner = true
