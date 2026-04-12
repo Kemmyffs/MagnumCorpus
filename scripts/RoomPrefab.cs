@@ -61,66 +61,49 @@ public partial class RoomPrefab : Node2D
 			enemyInstance.GlobalPosition = new Vector2(rng.Next(32,361), rng.Next(32,361));
 			AddChild(enemyInstance);
 			enemyInstance.SetTarget();
-			
 		}
 	}
-
-
 	
 	public void SetDoor(Vector2 side, bool open)
 	{
+		if(open) return;
+
 		int startX = 0, startY = 0, doorWidth = 0, doorHeight = 0;
+		Vector2I wallTile = Vector2I.One;
 		if (side == Vector2.Up)
 		{
 			startY = -1;
-			startX = 10;
-			doorWidth = 4;
+			startX = 9;
+			doorWidth = 6;
 			doorHeight = 1;
+			wallTile.X = 2;
 		}
 		else if (side == Vector2.Left)
 		{
-			startY = 10;
+			startY = 9;
 			startX = -1;
 			doorWidth = 1;
-			doorHeight = 4;
+			doorHeight = 6;
 		} else if(side == Vector2.Down)
 		{
 			startY = 24;
-			startX = 10;
-			doorWidth = 4;
+			startX = 9;
+			doorWidth = 6;
 			doorHeight = 1;
+			wallTile.X = 2;
 		} else if(side == Vector2.Right)
 		{
-			startY = 10;
+			startY = 9;
 			startX = 24;
 			doorWidth = 1;
-			doorHeight = 4;
+			doorHeight = 6;
 		}
-		/*
-			Vector2I tile;
-			if (open)
-			{
-				tile = new Vector2I(3, 0);
-			}
-			else
-			{
-				tile = new Vector2I(0, 0);
-			}
-		*/
-
-		/*
-		Vector2I tile;
-		tile = open ? new Vector2I(3,0) : new Vector2I(0,0);
-		*/
-
-		Vector2I tile = Vector2I.Zero;
-		tile.X = open ? 3 : 0;
 
 		for (int x = 0; x < doorWidth; x++)
 		{
 			for (int y = 0; y < doorHeight; y++)
 			{
-				TileMapBase.SetCell(new Vector2I(startX + x, startY + y), 0, tile, 0);
+				TileMapBase.SetCell(new Vector2I(startX + x, startY + y), 0, wallTile, 0);
 			}
 		}
 	}

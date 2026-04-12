@@ -14,5 +14,6 @@ public static partial class GlobalScript : Object
 
 	public static int FloorTotalEnemyCount {get; set;}
 	public static int FloorCurrentEnemyCount {get; set;}
+	public static bool PausedGame = false;
 
 }

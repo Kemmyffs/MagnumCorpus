@@ -62,7 +62,11 @@ public partial class Hud : Control
 	public void OnEnemyDeath()
 	{
 		GlobalScript.FloorCurrentEnemyCount--;
-		UpdateEnemyCounter();
+		UpdateEnemyCounter();	
+		if(GlobalScript.FloorCurrentEnemyCount == 0)
+		{
+			
+		}
 	}
 
 }

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://c3ij65x2k8h2b"]
+
+[ext_resource type="Theme" uid="uid://cwcpu41vaj6ay" path="res://themes/DefaultTheme.tres" id="1_qwnig"]
+[ext_resource type="Script" uid="uid://cy8c31wc06b7q" path="res://scenes/UI/MainMenu.cs" id="1_yonvy"]
+
+[node name="MainMenu" type="Control" unique_id=1436551915]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yonvy")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1549143828]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 256.0
+grow_horizontal = 2
+theme = ExtResource("1_qwnig")
+theme_override_colors/font_outline_color = Color(1, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 32
+theme_override_constants/shadow_offset_x = 16
+theme_override_constants/shadow_offset_y = 16
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 128
+text = "Magnum Corpus"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=885612007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 440.0
+offset_top = 336.0
+offset_right = -351.0
+offset_bottom = -142.0
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=365738361]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Start Game"
+
+[connection signal="button_up" from="VBoxContainer/Button" to="." method="_on_button_button_up"]
