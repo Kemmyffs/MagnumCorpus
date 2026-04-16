@@ -16,7 +16,6 @@ collision_mask = 33
 motion_mode = 1
 script = ExtResource("1_c2hjc")
 ChaseRadius = 200
-MaxHealth = 50
 BaseSpeed = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1092338224]
@@ -31,7 +30,7 @@ vframes = 5
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("3_hnwwm")]
 position = Vector2(0, 2)
-MaxHealth = 10
+MaxHealth = 50
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("2_71jmq")]
 DashForce = 0.0
