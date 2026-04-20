@@ -4,9 +4,8 @@ using System.Diagnostics;
 
 [Icon("res://customResources//iconPack/32x32/heart.png")]
 
-public partial class HealthComponent : Node2D
+public partial class HealthComponent : Component
 {
-	private Character _parent;
 	private TextureProgressBar HealthBar;
 	private TextureProgressBar SpecialBar;
 	private Area2D Hurtbox;
@@ -18,16 +17,16 @@ public partial class HealthComponent : Node2D
 
 	public override void _Ready()
 	{
-		_parent = GetParent<Character>();
+		base._Ready();
 		Hurtbox = GetNode<Area2D>("Hurtbox");
 		Console.WriteLine($"RechargeTime: {SpecialBarRechargeTime}");
 
 		Hurtbox.AreaEntered += OnAreaEntered;
 
-		if (_parent.Name == "Player")
+		if (Parent.Name == "Player")
 		{
-			HealthBar = _parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//HealthBar");
-			SpecialBar = _parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//SpecialBar");
+			HealthBar = Parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//HealthBar");
+			SpecialBar = Parent.GetNode<TextureProgressBar>("CanvasLayer//HUD//TextureRect//SpecialBar");
 			GetNode<TextureProgressBar>("HealthBar").Visible = false;
 			GetNode<TextureProgressBar>("SpecialBar").Visible = false;
 			GetNode<TextureRect>("Background").Visible = false;
@@ -64,7 +63,7 @@ public partial class HealthComponent : Node2D
 	public void Damage(int dmg)
 	{
 		CurrentHealth -= dmg;
-		if (CurrentHealth <= 0) _parent.Die();
+		if (CurrentHealth <= 0) Parent.Die();
 		HealthBar.Value = CurrentHealth;
 	}
 

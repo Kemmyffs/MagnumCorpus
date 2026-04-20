@@ -1,13 +1,11 @@
 using Godot;
-using System;
-
 
 public partial class Enemy : Character
 {
-	private Player Target;
 	private Player playerNode;
 	[Export] public int ChaseRadius;
 	[Signal] public delegate void JustDiedEventHandler();
+	private DirectionProvidingComponent DirectionProvider;
 
 	public override void _Ready()
 	{
@@ -19,33 +17,18 @@ public partial class Enemy : Character
 		{
 			var shape = (CircleShape2D)GetNode<CollisionShape2D>("ChaseComponent/Area2D/CollisionShape2D").Shape;
 			shape.Radius = ChaseRadius;
+			DirectionProvider = GetNode<DirectionProvidingComponent>("ChaseComponent");
 		}
+
+		//set different node responsible for movement
+
 
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		if(!IsInstanceValid(Target)) return;
-		if(Target == null) return;
-
-		Vector2 direction = (Target.GlobalPosition - GlobalPosition).Normalized();
+		Vector2 direction = DirectionProvider.ProvideDirection();
 		
 		_moveComponent.DesiredDirection = direction;
-	}
-
-	public void SetTarget()
-	{
-		try
-		{
-			Target = GetParent().GetParent().GetParent().GetNode<Player>("Player");
-		}
-		catch (System.NullReferenceException)
-		{
-			Target =  null;
-		}
-	}
-	public void SetTarget(Player body)
-	{
-		Target = body;
 	}
 
     public override void Die()

@@ -2,32 +2,44 @@ using Godot;
 using System;
 [Icon("res://customResources//iconPack/32x32/location_character.png")]
 
-public partial class ChaseComponent : Node2D
+public partial class ChaseComponent : DirectionProvidingComponent
 {
-	public Enemy Parent;
+	public Character Target;
 	public override void _Ready()
 	{
-		Parent = GetParent<Enemy>();
+		base._Ready();
 	}
 
 	public void Area2DBodyEntered(Node2D body)
 	{
-		if(body.Name.Equals("Player"))
+		if (body.Name.Equals("Player"))
 		{
-			Parent.SetTarget((Player) body);
-			GD.Print("Targeting the player!");
-		} else
+			SetTarget((Character)body);
+		}
+		else
 		{
-			Parent.SetTarget(null);
+			SetTarget(null);
 		}
 	}
 
 	public void Area2DBodyExited(Node2D body)
 	{
-		if(body.Name.Equals("Player"))
+		if (body.Name.Equals("Player"))
 		{
-			Parent.SetTarget(null);
-			GD.Print("Lost track of player :(");
+			SetTarget(null);
 		}
 	}
+
+	public void SetTarget(Character body)
+	{
+		Target = body;
+	}
+
+	public override Vector2 ProvideDirection()
+	{
+		return Target != null
+			? (Target.GlobalPosition - this.GlobalPosition).Normalized()
+			: Vector2.Zero;
+	}
+
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 [Icon("res://customResources//iconPack/32x32/sword.png")]
 
-public partial class AttackComponent : Node2D
+public partial class AttackComponent : Component
 {
 	[Export] public int AttackOffset;
 	[Export] public int Damage;
@@ -14,8 +14,6 @@ public partial class AttackComponent : Node2D
 	};
 
 	public bool CanAttack = true;
-
-	private Character _parent;
 	private AnimatedSprite2D AttackAnimatedSprite;
 	private Area2D Hitbox;
 	private CollisionShape2D HitboxShape;
@@ -23,7 +21,7 @@ public partial class AttackComponent : Node2D
 
 	public override void _Ready()
 	{
-		_parent = GetParent<Character>();
+		base._Ready();
 		AttackAnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		Hitbox = GetNode<Area2D>("Hitbox");
 		HitboxShape = Hitbox.GetNode<CollisionShape2D>("CollisionShape2D");

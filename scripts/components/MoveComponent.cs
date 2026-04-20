@@ -1,12 +1,10 @@
 using System;
 using Godot;
 [Icon("res://customResources//iconPack/32x32/arrow_out.png")]
-public partial class MoveComponent : Node
+public partial class MoveComponent : Component
 {
-	private Character _parent;
 	private CollisionShape2D MoveCollisionShape;
-
-	public float BaseSpeed = 150;
+	public float BaseSpeed;
 	[Export] public float DashForce = 200;
 	[Export] public float DashDecay = 750; // higher -> stops faster
 	[Export] public float Acceleration = 2000f;
@@ -22,15 +20,15 @@ public partial class MoveComponent : Node
 
 	public override void _Ready()
 	{
-		_parent = GetParent<Character>();
-		BaseSpeed = _parent.BaseSpeed;
-		MoveCollisionShape = _parent.GetNode<CollisionShape2D>("CollisionShape2D");
+		Parent = GetParent<Character>();
+		BaseSpeed = Parent.BaseSpeed;
+		MoveCollisionShape = Parent.GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		float d = (float)delta;
-		Vector2 velocity = _parent.Velocity;
+		Vector2 velocity = Parent.Velocity;
 
 		_isDashing = _dashVelocity.Length() > 0;
 		//Charge
@@ -72,10 +70,10 @@ public partial class MoveComponent : Node
 			);
 		}
 
-		_parent.SetCollisionMaskValue(1, !_isDashing);
-		_parent.SetCollisionMaskValue(2, _isDashing);
-		_parent.SetCollisionLayerValue(1, !_isDashing);
-		_parent.SetCollisionLayerValue(2, _isDashing);
+		Parent.SetCollisionMaskValue(1, !_isDashing);
+		Parent.SetCollisionMaskValue(2, _isDashing);
+		Parent.SetCollisionLayerValue(1, !_isDashing);
+		Parent.SetCollisionLayerValue(2, _isDashing);
 
 
 		//Smoothing transition between a dash move and a regular move
@@ -86,20 +84,18 @@ public partial class MoveComponent : Node
 		velocity = combined;
 		//
 
-		_parent.Velocity = velocity;
+		Parent.Velocity = velocity;
 
-		_parent.MoveAndSlide();
+		Parent.MoveAndSlide();
 	}
 
 	public void Dash(Vector2 direction)
 	{
 		if (direction == Vector2.Zero)
 			return;
-		if (_parent._healthComponent.hasEnoughSpecial(_parent.ChargesAmountInFullBar))
+		if (Parent._healthComponent.hasEnoughSpecial(Parent.ChargesAmountInFullBar))
 		{
-			Console.WriteLine("CHAAAAAARGE!!!");
-			_parent._healthComponent.SubtractSpecialBarValue(_parent.ChargesAmountInFullBar);
-
+			Parent._healthComponent.SubtractSpecialBarValue(Parent.ChargesAmountInFullBar);
 			_dashVelocity = direction.Normalized() * DashForce;
 		}
 
@@ -113,10 +109,5 @@ public partial class MoveComponent : Node
 	public void StopCharge()
 	{
 		_isCharging = false;
-	}
-
-	public void _DashCollisionLayer()
-	{
-
 	}
 }
