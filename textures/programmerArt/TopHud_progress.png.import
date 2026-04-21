@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pnrxruevd8yx"
-path="res://.godot/imported/TopHud-export.png-d6ac7b00fcef7191fcb07da7a726c84c.ctex"
+uid="uid://b0lak5ibfijvc"
+path="res://.godot/imported/TopHud_progress.png-2c631debfc8b1f5a57386362cd21177b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/programmerArt/TopHud-export.png"
-dest_files=["res://.godot/imported/TopHud-export.png-d6ac7b00fcef7191fcb07da7a726c84c.ctex"]
+source_file="res://textures/programmerArt/TopHud_progress.png"
+dest_files=["res://.godot/imported/TopHud_progress.png-2c631debfc8b1f5a57386362cd21177b.ctex"]
 
 [params]
 

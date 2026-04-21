@@ -12,7 +12,7 @@ public partial class Hud : Control
 	private Character PlayerParent;
 	public TextureProgressBar HealthBar;
 	public TextureProgressBar SpecialBar;
-	
+	public ColorRect EnemiesLeftProgressbar;
 	public DialogueManager dialogueManager;
 
 	public override void _Ready()
@@ -22,25 +22,41 @@ public partial class Hud : Control
 		PlayerParent = GetParent<CanvasLayer>().GetParent<Character>();
 		HealthBar = GetNode<TextureProgressBar>("TextureRect//HealthBar"); //TODO
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
+		EnemiesLeftProgressbar = GetNode<ColorRect>("TextureRect//ColorRect");
 
-		Console.WriteLine(GetTree().CurrentScene.Name);
-		GD.Print(GetTree().CurrentScene.Name);
-		if(GetTree().CurrentScene.Name == "TutorialMap")
+		if (GetTree().CurrentScene.Name == "TutorialMap")
 		{
 			GetNode<DialogueManager>("DialogManager").Visible = true;
 			dialogueManager = GetNode<DialogueManager>("DialogManager");
 			dialogueManager.init();
 			dialogueManager.DisplayDialogue();
-		} else
+		}
+		else
 		{
 			GetNode<DialogueManager>("DialogManager").Visible = false;
 			//GetNode<DialogueManager>("DialogManager").QueueFree();
 		}
 	}
 
-	public async void UpdateEnemyCounter()
+	public void UpdateEnemyCounter()
 	{
-		EnemiesLeftLabel.Text = $"{GlobalScript.FloorCurrentEnemyCount}/{GlobalScript.FloorTotalEnemyCount}";
+		int totalCount = GlobalScript.FloorTotalEnemyCount;
+		int currentCount = GlobalScript.FloorCurrentEnemyCount;
+
+		// 1. Calculate how many have been defeated
+		int enemiesKilled = totalCount - currentCount;
+
+		// 2. Calculate the fill percentage (0.0 to 1.0)
+		float fillPercentage = totalCount > 0 ? (float)enemiesKilled / totalCount : 0.0f;
+
+		// 3. Update the Label: Now shows "Killed / Total" (e.g., 2/10)
+		EnemiesLeftLabel.Text = $"{enemiesKilled}/{totalCount}";
+
+		// 4. Update the Shader
+		if (EnemiesLeftProgressbar.Material is ShaderMaterial sm)
+		{
+			sm.SetShaderParameter("fV", fillPercentage);
+		}
 	}
 	public void GenerateMinimap(bool[] grid, int x, int y, int height)
 	{
@@ -79,16 +95,16 @@ public partial class Hud : Control
 	public void OnEnemyDeath()
 	{
 		GlobalScript.FloorCurrentEnemyCount--;
-		UpdateEnemyCounter();	
-		if(GlobalScript.FloorCurrentEnemyCount == 0)
+		UpdateEnemyCounter();
+		if (GlobalScript.FloorCurrentEnemyCount == 0)
 		{
-			
+
 		}
 	}
 
 	public void UpdateFloorLabel()
 	{
-		GetNode<RichTextLabel>("LevelNumberLabelContainer/LevelNumberLabel").Text = GlobalScript.CurrentFloorLevel.ToString(); 
+		GetNode<RichTextLabel>("LevelNumberLabelContainer/LevelNumberLabel").Text = GlobalScript.CurrentFloorLevel.ToString();
 	}
 
 }
