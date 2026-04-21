@@ -1,16 +1,5 @@
 using Godot;
 using System;
-
-//0,0 až 23,23
-//TODO neni dobrej napad si pocet tilů roomky (bez zdí) automaticky vypocitavat? Mozna?
-//doors -1, 10-13
-
-// ----**** TO-DO ****----
-//	 
-//	*	Předělat generaci mostů a dveří s novými tiles
-//	*
-//
-// ----***************----
 public partial class RoomPrefab : Node2D
 {
 
@@ -62,7 +51,7 @@ public partial class RoomPrefab : Node2D
 	public void SpawnEnemy()
 	{
 		Random rng = new Random();
-		PackedScene enemyScene = GD.Load<PackedScene>("objects/enemies/mouldling.tscn");
+		PackedScene enemyScene = GD.Load<PackedScene>("objects/enemies/sugar_ant.tscn");
 		Enemy enemyInstance = (Enemy) enemyScene.Instantiate();
 		enemyInstance.GlobalPosition = new Vector2(rng.Next(32,361), rng.Next(32,361));
 		AddChild(enemyInstance);

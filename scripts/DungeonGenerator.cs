@@ -44,7 +44,7 @@ public partial class DungeonGenerator : Node2D
 
         GenerateDungeonMap();
         EmitFlattenedGrid(RoomGrid_Icons);
-        SetFloorColor(new Color(0.0f, 1.419f, 0.783f));
+        SetFloorColor(new Color(1.0f, 1.0f, 0.918f));
         CalculateEnemyCounts();
     }
 

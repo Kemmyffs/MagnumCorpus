@@ -117,3 +117,23 @@ theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("7_xh8q5")
 theme_override_font_sizes/normal_font_size = 38
 fit_content = true
+
+[node name="LevelNumberLabelContainer" type="CenterContainer" parent="." unique_id=204961299]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.09900001
+offset_bottom = -0.15200806
+grow_horizontal = 2
+
+[node name="LevelNumberLabel" type="RichTextLabel" parent="LevelNumberLabelContainer" unique_id=423554606]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/normal_font_size = 48
+text = "Floor 0"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cy47e8hsf3128"]
+
+[ext_resource type="PackedScene" uid="uid://c4vu8ia4v14x1" path="res://components/health_component.tscn" id="1_8vr46"]
+[ext_resource type="Script" uid="uid://cj5r1rohvjlle" path="res://scripts/Enemies/SugarAnt.cs" id="1_aus4a"]
+[ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="2_aus4a"]
+[ext_resource type="PackedScene" uid="uid://dr5asx1o18kp6" path="res://components/chase_component.tscn" id="3_0hi7k"]
+[ext_resource type="PackedScene" uid="uid://dq7kwtmd22lm8" path="res://components/attack_component.tscn" id="4_rodjt"]
+[ext_resource type="Texture2D" uid="uid://digxnqilqgt0n" path="res://textures/programmerArt/ant.png" id="5_py0p6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aus4a"]
+size = Vector2(16, 7)
+
+[node name="SugarAnt" type="CharacterBody2D" unique_id=894038355]
+collision_layer = 33
+collision_mask = 33
+script = ExtResource("1_aus4a")
+ChaseRadius = 800
+ChargesAmountInFullBar = null
+
+[node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("1_8vr46")]
+MaxHealth = 5
+SpecialBarRechargeTime = null
+
+[node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("2_aus4a")]
+
+[node name="ChaseComponent" parent="." unique_id=861140757 instance=ExtResource("3_0hi7k")]
+
+[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_rodjt")]
+AttackOffset = null
+Damage = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1868417412]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_aus4a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=263602855]
+texture = ExtResource("5_py0p6")

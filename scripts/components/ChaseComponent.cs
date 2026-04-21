@@ -16,10 +16,6 @@ public partial class ChaseComponent : DirectionProvidingComponent
 		{
 			SetTarget((Character)body);
 		}
-		else
-		{
-			SetTarget(null);
-		}
 	}
 
 	public void Area2DBodyExited(Node2D body)

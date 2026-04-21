@@ -34,7 +34,7 @@ public partial class Hud : Control
 		} else
 		{
 			GetNode<DialogueManager>("DialogManager").Visible = false;
-			GetNode<DialogueManager>("DialogManager").QueueFree();
+			//GetNode<DialogueManager>("DialogManager").QueueFree();
 		}
 	}
 
@@ -84,6 +84,11 @@ public partial class Hud : Control
 		{
 			
 		}
+	}
+
+	public void UpdateFloorLabel()
+	{
+		GetNode<RichTextLabel>("LevelNumberLabelContainer/LevelNumberLabel").Text = GlobalScript.CurrentFloorLevel.ToString(); 
 	}
 
 }
