@@ -43,13 +43,10 @@ public partial class Hud : Control
 		int totalCount = GlobalScript.FloorTotalEnemyCount;
 		int currentCount = GlobalScript.FloorCurrentEnemyCount;
 
-		// 1. Calculate how many have been defeated
 		int enemiesKilled = totalCount - currentCount;
 
-		// 2. Calculate the fill percentage (0.0 to 1.0)
 		float fillPercentage = totalCount > 0 ? (float)enemiesKilled / totalCount : 0.0f;
 
-		// 3. Update the Label: Now shows "Killed / Total" (e.g., 2/10)
 		EnemiesLeftLabel.Text = $"{enemiesKilled}/{totalCount}";
 
 		// 4. Update the Shader

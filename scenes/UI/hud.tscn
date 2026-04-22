@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b6h45h545ppv1" path="res://textures/programmerArt/Specialbar_under.png" id="7_w414h"]
 [ext_resource type="FontFile" uid="uid://dwp0wqjwouedd" path="res://fonts/dogicapixel.ttf" id="7_xh8q5"]
 [ext_resource type="Texture2D" uid="uid://76vdkebbq3mo" path="res://textures/programmerArt/plrSpecialbar.png" id="8_d15ok"]
+[ext_resource type="Shader" uid="uid://du0srvv1nvp21" path="res://shaders/transitions/DiamondSweep.gdshader" id="12_kj32l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t6axx"]
 shader = ExtResource("2_kj32l")
@@ -26,6 +27,100 @@ texture = ExtResource("3_y5tme")
 
 [sub_resource type="TileSet" id="TileSet_0jeyp"]
 sources/0 = SubResource("TileSetAtlasSource_18exe")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fcg2"]
+shader = ExtResource("12_kj32l")
+shader_parameter/progress = 0.0
+shader_parameter/size = 16.0
+shader_parameter/fill = true
+
+[sub_resource type="Animation" id="Animation_qe851"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kj32l"]
+resource_name = "transition_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ggbtr"]
+resource_name = "transition_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w414h"]
+_data = {
+&"RESET": SubResource("Animation_qe851"),
+&"transition_in": SubResource("Animation_kj32l"),
+&"transition_out": SubResource("Animation_ggbtr")
+}
 
 [node name="HUD" type="Control" unique_id=128909635]
 layout_mode = 3
@@ -153,3 +248,16 @@ text = "Floor 0"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="TransitionRect" type="ColorRect" parent="." unique_id=523555000]
+material = SubResource("ShaderMaterial_0fcg2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.32941177, 0.6901961, 0.57254905, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=265804921]
+libraries/ = SubResource("AnimationLibrary_w414h")
