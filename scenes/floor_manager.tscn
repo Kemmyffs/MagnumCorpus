@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://oke8uhgiuac"]
-
-[ext_resource type="Script" path="res://scripts/FloorManager.cs" id="1_6ieux"]
-
-[node name="FloorManager" type="Node2D" unique_id=367905620]
-script = ExtResource("1_6ieux")

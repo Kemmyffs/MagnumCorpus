@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://dukxr0lm6gps2" path="res://shaders/EnemyCounterProgressBarShader.gdshader" id="2_kj32l"]
 [ext_resource type="Texture2D" uid="uid://b1rfoo24qbmem" path="res://textures/programmerArt/EnemyCounter_bg.png" id="3_0fcg2"]
 [ext_resource type="Texture2D" uid="uid://7po0xajyijrm" path="res://textures/programmerArt/minimap.png" id="3_y5tme"]
+[ext_resource type="Script" uid="uid://dhgdwrbfs406f" path="res://scripts/UI/EnemyCounterProgress.cs" id="4_0fcg2"]
 [ext_resource type="Texture2D" uid="uid://dtn57lhels4ts" path="res://textures/programmerArt/plrHealthBar.png" id="4_k00v8"]
 [ext_resource type="Script" uid="uid://cd1t4i30giyh0" path="res://scripts/DialogueManager.cs" id="5_cg4gw"]
 [ext_resource type="Texture2D" uid="uid://dat2twqooeaq" path="res://textures/programmerArt/healthbar_under.png" id="5_ggbtr"]
@@ -15,7 +16,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t6axx"]
 shader = ExtResource("2_kj32l")
-shader_parameter/fV = 0.510000024225
+shader_parameter/fV = 0.0
 shader_parameter/baseColor = Color(1, 0.8901961, 0.76862746, 1)
 shader_parameter/speed = 0.50000002375
 
@@ -145,6 +146,7 @@ layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
 color = Color(1, 0.8901961, 0.76862746, 1)
+script = ExtResource("4_0fcg2")
 
 [node name="HealthBar" type="TextureProgressBar" parent="TextureRect" unique_id=1697084545]
 layout_mode = 0

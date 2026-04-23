@@ -12,7 +12,7 @@ public partial class Hud : Control
 	private Character PlayerParent;
 	public TextureProgressBar HealthBar;
 	public TextureProgressBar SpecialBar;
-	public ColorRect EnemiesLeftProgressbar;
+	public EnemyCounterProgress EnemiesLeftProgressbar;
 	public DialogueManager dialogueManager;
 
 	public override void _Ready()
@@ -22,7 +22,7 @@ public partial class Hud : Control
 		PlayerParent = GetParent<CanvasLayer>().GetParent<Character>();
 		HealthBar = GetNode<TextureProgressBar>("TextureRect//HealthBar"); //TODO
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
-		EnemiesLeftProgressbar = GetNode<ColorRect>("TextureRect//ColorRect");
+		EnemiesLeftProgressbar = GetNode<EnemyCounterProgress>("TextureRect//ColorRect");
 
 		if (GetTree().CurrentScene.Name == "TutorialMap")
 		{
@@ -42,20 +42,15 @@ public partial class Hud : Control
 	{
 		int totalCount = GlobalScript.FloorTotalEnemyCount;
 		int currentCount = GlobalScript.FloorCurrentEnemyCount;
-
 		int enemiesKilled = totalCount - currentCount;
-
-		float fillPercentage = totalCount > 0 ? (float)enemiesKilled / totalCount : 0.0f;
 
 		EnemiesLeftLabel.Text = $"{enemiesKilled}/{totalCount}";
 
-		// 4. Update the Shader
-		if (EnemiesLeftProgressbar.Material is ShaderMaterial sm)
-		{
-			sm.SetShaderParameter("fV", fillPercentage);
-		}
+		float fillPercentage = totalCount > 0 ? (float)enemiesKilled / totalCount : 0.0f;
+		EnemiesLeftProgressbar.GraduallyIncrementEnemyProgressBar(fillPercentage);
 	}
-	public void GenerateMinimap(bool[] grid, int x, int y, int height)
+
+    public void GenerateMinimap(bool[] grid, int x, int y, int height)
 	{
 		roomMapIconGrid = Reconstruct(grid, x, y, height);
 
