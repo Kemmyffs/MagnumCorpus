@@ -10,10 +10,11 @@ public partial class Enemy : Character
 	public override void _Ready()
 	{
 		base._Ready();
-		playerNode = GetParent().GetParent().GetParent().GetNode<Player>("Player");
+		playerNode = GetParent().GetParent().GetNode<Player>("%Player");
+		//GetTree().GetFirstNodeInGroup()
 		Connect("JustDied", new Callable(playerNode.GetNode<Hud>("CanvasLayer/HUD"), "OnEnemyDeath"));
 
-		if(HasNode("ChaseComponent"))
+		if (HasNode("ChaseComponent"))
 		{
 			var shape = (CircleShape2D)GetNode<CollisionShape2D>("ChaseComponent/Area2D/CollisionShape2D").Shape;
 			shape.Radius = ChaseRadius;
@@ -26,14 +27,16 @@ public partial class Enemy : Character
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 direction = DirectionProvider.ProvideDirection();
-		
-		_moveComponent.DesiredDirection = direction;
+		if (DirectionProvider != null)
+		{
+			Vector2 direction = DirectionProvider.ProvideDirection();
+			_moveComponent.DesiredDirection = direction;
+		}
 	}
 
-    public override void Die()
-    {
+	public override void Die()
+	{
 		EmitSignal(SignalName.JustDied);
-        base.Die();
-    }
+		base.Die();
+	}
 }

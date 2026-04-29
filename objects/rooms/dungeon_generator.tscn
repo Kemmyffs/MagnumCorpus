@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cbqloukas2bp6" path="res://objects/rooms/room_prefab.tscn" id="2_1i4yp"]
 [ext_resource type="PackedScene" uid="uid://ba1ywadudjpsd" path="res://objects/rooms/room_map.tscn" id="2_u0h3c"]
 [ext_resource type="PackedScene" uid="uid://cxslelbcdvgcv" path="res://objects/player.tscn" id="3_s1qmf"]
+[ext_resource type="Script" uid="uid://bbbr2dhtvsfb6" path="res://scripts/EnemyRoot.cs" id="4_s4wxe"]
 
 [node name="DungeonGenerator" type="Node2D" unique_id=1318291132]
 script = ExtResource("1_wnh5j")
@@ -20,9 +21,11 @@ MaxEnemiesPerRoom = 5
 [node name="MapRoot" type="Node2D" parent="." unique_id=41446376]
 unique_name_in_owner = true
 
+[node name="EnemyRoot" type="Node2D" parent="." unique_id=154218337]
+script = ExtResource("4_s4wxe")
+
 [node name="Player" parent="." unique_id=1962636832 instance=ExtResource("3_s1qmf")]
+unique_name_in_owner = true
 position = Vector2(1032, 456)
 collision_layer = 17
 collision_mask = 17
-
-[connection signal="FinishedGeneration" from="." to="Player" method="_on_dungeon_generator_finished_generation"]

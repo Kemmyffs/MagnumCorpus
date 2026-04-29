@@ -26,16 +26,16 @@ height = 26.0
 [node name="Player" type="CharacterBody2D" unique_id=1962636832]
 motion_mode = 1
 script = ExtResource("1_ykyjo")
-BaseSpeed = 150.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1456656584]
 material = SubResource("ShaderMaterial_3rfka")
 texture = ExtResource("1_eqqp1")
 hframes = 8
 script = ExtResource("4_i8sra")
+Target = null
+TintSpeed = null
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
-Friction = 1900.0
 ChargeFriction = 250.0
 
 [node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_cyhxw")]

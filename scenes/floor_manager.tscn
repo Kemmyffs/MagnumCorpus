@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cbfut671edbhh"]
+
+[ext_resource type="Script" uid="uid://s7vv7sgmhwvc" path="res://scripts/FloorManager.cs" id="1_6ieux"]
+[ext_resource type="PackedScene" uid="uid://de08hpuk2aafl" path="res://objects/rooms/dungeon_generator.tscn" id="1_yxkdn"]
+
+[node name="FloorManager" type="Node2D" unique_id=1642133892]
+script = ExtResource("1_6ieux")
+
+[node name="DungeonGenerator" parent="." unique_id=1318291132 instance=ExtResource("1_yxkdn")]

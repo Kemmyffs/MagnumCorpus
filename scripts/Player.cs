@@ -44,6 +44,11 @@ public partial class Player : Character
 		{
 			GetTree().Quit();
 		}
+
+		if(Input.IsKeyPressed(Key.P))
+		{
+			Console.WriteLine(GlobalPosition);
+		}
 	}
 
 

@@ -34,7 +34,7 @@ public partial class ChaseComponent : DirectionProvidingComponent
 	public override Vector2 ProvideDirection()
 	{
 		return Target != null
-			? (Target.GlobalPosition - this.GlobalPosition).Normalized()
+			? (Target.GlobalPosition - GlobalPosition).Normalized()
 			: Vector2.Zero;
 	}
 

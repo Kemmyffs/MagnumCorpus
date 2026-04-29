@@ -9,7 +9,10 @@ public static partial class GlobalScript : Object
 {
 	public enum EnemyTypes
 	{
-		SaltShaker
+		//salt_shaker,
+		sugar_ant,
+		//ghost,
+		mouldling
 	};
 
 	public static Dictionary<string, Flavor> AllFlavors = new Dictionary<string, Flavor>()

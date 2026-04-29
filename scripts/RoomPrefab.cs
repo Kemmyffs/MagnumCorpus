@@ -57,11 +57,6 @@ public partial class RoomPrefab : Node2D
 		AddChild(enemyInstance);
 	}
 
-	public void SpawnEnemy(GlobalScript.EnemyTypes enemyType)
-	{
-		
-	}
-
 	
 	public void SetDoor(Vector2 side, bool open)
 	{
