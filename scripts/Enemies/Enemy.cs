@@ -29,17 +29,6 @@ public partial class Enemy : Character
 		SetShaderMaterial();
 	}
 
-	private void SetShaderMaterial()
-	{
-		sm = new ShaderMaterial();
-
-		Shader shader = GD.Load<Shader>("res://shaders/EnemyShader.gdshader");
-		sm.Shader = shader;
-		sm.SetShaderParameter("flash_color", Colors.Red);
-		
-		GetNode<Sprite2D>("Sprite2D").Material = sm;
-	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		if (DirectionProvider != null)
@@ -49,11 +38,20 @@ public partial class Enemy : Character
 		}
 	}
 
+	private void SetShaderMaterial()
+	{
+		sm = new ShaderMaterial();
+
+		Shader shader = GD.Load<Shader>("res://shaders/EnemyShader.gdshader");
+		sm.Shader = shader;
+		sm.SetShaderParameter("flash_color", Colors.Red);
+
+		GetNode<Sprite2D>("Sprite2D").Material = sm;
+	}
+
 	public override void Die()
 	{
-		Console.WriteLine("Emmited Enemy Death");
 		EmitSignal("JustDied");
-		Console.WriteLine("Emmited Enemy Death After");
 		base.Die();
 	}
 

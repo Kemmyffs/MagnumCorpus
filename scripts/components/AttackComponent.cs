@@ -10,7 +10,9 @@ public partial class AttackComponent : Component
 	[Export] public int Damage;
 	public enum AttackType
 	{
-
+		Slash,
+		Touch,
+		GroundSlam
 	};
 
 	public bool CanAttack = true;
@@ -22,10 +24,20 @@ public partial class AttackComponent : Component
 	public override void _Ready()
 	{
 		base._Ready();
-		AttackAnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		Hitbox = GetNode<Area2D>("Hitbox");
-		HitboxShape = Hitbox.GetNode<CollisionShape2D>("CollisionShape2D");
-		HitboxShape.Disabled = true;
+		if(Parent.GetType() == typeof(Player))
+		{
+			AttackAnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+			Hitbox = GetNode<Area2D>("Hitbox");
+			HitboxShape = Hitbox.GetNode<CollisionShape2D>("CollisionShape2D");
+			HitboxShape.Disabled = true;
+		} else
+		{
+			AttackAnimatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+			Hitbox = GetNode<Area2D>("Hitbox");
+			HitboxShape = Hitbox.GetNode<CollisionShape2D>("CollisionShape2D");
+			HitboxShape.Disabled = true;
+		}
+		
 	}
 
 

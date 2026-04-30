@@ -27,7 +27,6 @@ public partial class Character : CharacterBody2D
 
     public virtual void Die()
     {
-        
         QueueFree();
     }
 

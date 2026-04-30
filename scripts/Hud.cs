@@ -66,6 +66,11 @@ public partial class Hud : Control
 				}
 			}
 		}
+		Sprite2D miniMapSprite = TilemapToSpriteGenerator.ConvertToSprite(TileMapLayer);
+		CenterContainer cc = GetNode<CenterContainer>("MapCenterContainer");
+		miniMapSprite.Scale = Vector2.One * 3;
+		cc.AddChild(miniMapSprite);
+
 	}
 
 	public void UpdateFloorLabel()

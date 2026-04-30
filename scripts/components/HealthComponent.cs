@@ -63,7 +63,6 @@ public partial class HealthComponent : Component
 		CurrentHealth -= dmg;
 		if (CurrentHealth <= 0) Parent.Die();
 		HealthBar.Value = CurrentHealth;
-		Console.WriteLine(Parent.GetType());
 		
 		if(Parent.GetType() != typeof(Player))
 		{

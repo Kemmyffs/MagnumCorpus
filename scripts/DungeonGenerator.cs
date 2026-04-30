@@ -215,7 +215,6 @@ public partial class DungeonGenerator : Node2D
     #region Floor Logic
     public void OnEnemyDeath()
     {
-        Console.WriteLine("Cau");
         enemyRoot.CurrentEnemyCount--;
         hud.UpdateEnemyCounter();
         if (enemyRoot.CurrentEnemyCount == 0)
