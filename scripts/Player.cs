@@ -44,21 +44,6 @@ public partial class Player : Character
 		{
 			GetTree().Quit();
 		}
-
-		if(Input.IsKeyPressed(Key.P))
-		{
-			Console.WriteLine(GlobalPosition);
-		}
-	}
-
-
-	public void _on_dungeon_generator_finished_generation(Array<bool> godotGrid, int x, int y, int height)
-	{
-		var grid = godotGrid.ToArray<bool>();
-		Hud hudnode = GetNode<Hud>("CanvasLayer//HUD");
-		hudnode.GenerateMinimap(grid, x, y, height);
-
-		//TextureRect mapTextureRect = GetNode<TextureRect>("MapTextureRect");
 	}
 
 }

@@ -7,7 +7,7 @@ public partial class Hud : Control
 
 	public TileMapLayer TileMapLayer;
 	private Label EnemiesLeftLabel;
-	private bool[,] roomMapIconGrid;
+	private RoomMapIcon[,] roomMapIconGrid;
 
 	private Character PlayerParent;
 	public TextureProgressBar HealthBar;
@@ -50,15 +50,16 @@ public partial class Hud : Control
 		EnemiesLeftProgressbar.GraduallyIncrementEnemyProgressBar(fillPercentage);
 	}
 
-    public void GenerateMinimap(bool[] grid, int x, int y, int height)
+    public void GenerateMinimap(int x, int y)
 	{
-		roomMapIconGrid = Reconstruct(grid, x, y, height);
-
+		Console.WriteLine("Generating Minimap From HUD");
+		//roomMapIconGrid = PlayerParent.GetParent()("DungeonGenerator").RoomGrid_Icons;
+		roomMapIconGrid = PlayerParent.GetParent<DungeonGenerator>().RoomGrid_Icons;
 		for (int i = 0; i < x; i++)
 		{
 			for (int j = 0; j < y; j++)
 			{
-				if (!roomMapIconGrid[i, j])
+				if (roomMapIconGrid[i, j] != null)
 				{
 					TileMapLayer.SetCell(new Vector2I(i, j), 0, new Vector2I(0, 0), 0);
 				}

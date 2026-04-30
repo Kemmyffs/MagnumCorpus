@@ -15,7 +15,6 @@ RoomPrefab = ExtResource("2_1i4yp")
 RoomTileCount = 26
 TileSizePx = 16
 RoomOffset = 96
-TotalFloorEnemyCount = 10
 MaxEnemiesPerRoom = 5
 
 [node name="MapRoot" type="Node2D" parent="." unique_id=41446376]
@@ -29,3 +28,15 @@ unique_name_in_owner = true
 position = Vector2(1032, 456)
 collision_layer = 17
 collision_mask = 17
+
+[node name="Sprite2D" parent="Player" index="0" unique_id=1456656584]
+Target = 0.5
+TintSpeed = 0.5
+
+[node name="AttackComponent" parent="Player" index="2" unique_id=977282940]
+AttackOffset = 0
+
+[connection signal="CalculatedTotalEnemyCount" from="." to="Player/CanvasLayer/HUD" method="UpdateEnemyCounter"]
+[connection signal="FinishedGeneration" from="." to="Player/CanvasLayer/HUD" method="GenerateMinimap"]
+
+[editable path="Player"]
