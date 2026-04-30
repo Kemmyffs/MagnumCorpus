@@ -3,8 +3,11 @@ using System;
 
 public partial class EnemyRoot : Node2D
 {
-	Random Rng = new Random();
-	DungeonGenerator dungeonGenerator;
+	private Random Rng = new Random();
+	private DungeonGenerator dungeonGenerator;
+	
+	public int TotalEnemyCount;
+	public int CurrentEnemyCount;
 
 	public override void _Ready()
 	{
@@ -21,6 +24,8 @@ public partial class EnemyRoot : Node2D
 
 			SpawnEnemy(GetRandomEnemyType(), finalGlobalPos);
 		}
+		TotalEnemyCount = GetChildCount();
+		CurrentEnemyCount = TotalEnemyCount;
 	}
 
 	private void SpawnEnemy(GlobalScript.EnemyTypes enemyType, Vector2 globalPosition)

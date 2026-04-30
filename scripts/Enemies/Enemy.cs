@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Enemy : Character
@@ -11,7 +12,8 @@ public partial class Enemy : Character
 	{
 		base._Ready();
 		playerNode = GetParent().GetParent().GetNode<Player>("%Player");
-		Connect("JustDied", new Callable(playerNode.GetNode<Hud>("CanvasLayer/HUD"), "OnEnemyDeath"));
+		//Connect("JustDied", new Callable(GetParent<EnemyRoot>().GetParent<DungeonGenerator>(), "OnEnemyDeath"));
+		this.JustDied += GetParent<EnemyRoot>().GetParent<DungeonGenerator>().OnEnemyDeath;
 
 		if (HasNode("ChaseComponent"))
 		{
@@ -35,7 +37,9 @@ public partial class Enemy : Character
 
 	public override void Die()
 	{
-		EmitSignal(SignalName.JustDied);
+		Console.WriteLine("Emmited Enemy Death");
+		EmitSignal("JustDied");
+		Console.WriteLine("Emmited Enemy Death After");
 		base.Die();
 	}
 }

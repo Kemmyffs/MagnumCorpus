@@ -14,6 +14,7 @@ public partial class Hud : Control
 	public TextureProgressBar SpecialBar;
 	public EnemyCounterProgress EnemiesLeftProgressbar;
 	public DialogueManager dialogueManager;
+	private EnemyRoot enemyRoot;
 
 	public override void _Ready()
 	{
@@ -23,6 +24,8 @@ public partial class Hud : Control
 		HealthBar = GetNode<TextureProgressBar>("TextureRect//HealthBar"); //TODO
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
 		EnemiesLeftProgressbar = GetNode<EnemyCounterProgress>("TextureRect//ColorRect");
+
+		enemyRoot = PlayerParent.GetParent<DungeonGenerator>().GetNode<EnemyRoot>("EnemyRoot");
 
 		if (GetTree().CurrentScene.Name == "TutorialMap")
 		{
@@ -40,8 +43,8 @@ public partial class Hud : Control
 
 	public void UpdateEnemyCounter()
 	{
-		int totalCount = GlobalScript.FloorTotalEnemyCount;
-		int currentCount = GlobalScript.FloorCurrentEnemyCount;
+		int totalCount = enemyRoot.TotalEnemyCount;
+		int currentCount = enemyRoot.CurrentEnemyCount;
 		int enemiesKilled = totalCount - currentCount;
 
 		EnemiesLeftLabel.Text = $"{enemiesKilled}/{totalCount}";
@@ -62,16 +65,6 @@ public partial class Hud : Control
 					TileMapLayer.SetCell(new Vector2I(i, j), 0, new Vector2I(0, 0), 0);
 				}
 			}
-		}
-	}
-
-	public void OnEnemyDeath()
-	{
-		GlobalScript.FloorCurrentEnemyCount--;
-		UpdateEnemyCounter();
-		if (GlobalScript.FloorCurrentEnemyCount == 0)
-		{
-
 		}
 	}
 

@@ -24,7 +24,7 @@ public partial class DungeonGenerator : Node2D
     private Vector2I CenterRoomCoords;
     private EnemyRoot enemyRoot;
 
-
+    private Hud hud;
 
     private Node2D MapRoot;
     public RoomMapIcon[,] RoomGrid_Icons;
@@ -40,7 +40,7 @@ public partial class DungeonGenerator : Node2D
         RoomGrid_Icons = new RoomMapIcon[WorldSize.X, WorldSize.Y];
         RoomGrid_Prefabs = new RoomPrefab[WorldSize.X, WorldSize.Y];
         CenterRoomCoords = new Vector2I(WorldSize.X / 2, WorldSize.Y / 2);
-        Hud hud = PlayerNode.GetNode<Hud>("CanvasLayer/HUD");
+        hud = PlayerNode.GetNode<Hud>("CanvasLayer/HUD");
         FinishedGeneration += hud.GenerateMinimap;
         CalculatedTotalEnemyCount += hud.UpdateEnemyCounter;
 
@@ -222,5 +222,16 @@ public partial class DungeonGenerator : Node2D
         return roomNode.GlobalPosition + roomCoords;
     }
 
-
+    #region Floor Logic
+    public void OnEnemyDeath()
+    {
+        Console.WriteLine("Cau");
+        enemyRoot.CurrentEnemyCount--;
+        hud.UpdateEnemyCounter();
+        if (enemyRoot.CurrentEnemyCount == 0)
+        {
+            //FLOOR END
+        }
+    }
+    #endregion
 }
