@@ -57,7 +57,7 @@ public partial class DungeonGenerator : Node2D
         EmitSignal("CalculatedTotalEnemyCount");
     }
 
-
+    #region Generation
     public void GenerateDungeonMap()
     {
         List<Vector2I> placedRooms = new();
@@ -210,17 +210,7 @@ public partial class DungeonGenerator : Node2D
             room.TileMapBase.Modulate = desiredColor;
         }
     }
-
-    public Vector2 RandomRoomCoordinates()
-    {
-        return new Vector2(Rng.Next(32, 361), Rng.Next(32, 361));
-    }
-    public Vector2 RoomToGlobalCoords(Vector2 roomPosition, Vector2 roomCoords)
-    {
-        var roomNode = RoomGrid_Prefabs[(int)roomPosition.X, (int)roomPosition.Y];
-
-        return roomNode.GlobalPosition + roomCoords;
-    }
+    #endregion
 
     #region Floor Logic
     public void OnEnemyDeath()
@@ -234,4 +224,19 @@ public partial class DungeonGenerator : Node2D
         }
     }
     #endregion
+
+    #region Helper Methods
+    public Vector2 RandomRoomCoordinates()
+    {
+        return new Vector2(Rng.Next(32, 361), Rng.Next(32, 361));
+    }
+    public Vector2 RoomToGlobalCoords(Vector2 roomPosition, Vector2 roomCoords)
+    {
+        var roomNode = RoomGrid_Prefabs[(int)roomPosition.X, (int)roomPosition.Y];
+
+        return roomNode.GlobalPosition + roomCoords;
+    }
+    #endregion
+
+
 }

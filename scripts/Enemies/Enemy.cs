@@ -7,13 +7,15 @@ public partial class Enemy : Character
 	[Export] public int ChaseRadius;
 	[Signal] public delegate void JustDiedEventHandler();
 	private DirectionProvidingComponent DirectionProvider;
+	private ShaderMaterial sm;
+	private bool _isFlashing = false;
+	private float flashTime = 0.1f;
 
 	public override void _Ready()
 	{
 		base._Ready();
 		playerNode = GetParent().GetParent().GetNode<Player>("%Player");
-		//Connect("JustDied", new Callable(GetParent<EnemyRoot>().GetParent<DungeonGenerator>(), "OnEnemyDeath"));
-		this.JustDied += GetParent<EnemyRoot>().GetParent<DungeonGenerator>().OnEnemyDeath;
+		JustDied += GetParent<EnemyRoot>().GetParent<DungeonGenerator>().OnEnemyDeath;
 
 		if (HasNode("ChaseComponent"))
 		{
@@ -24,8 +26,20 @@ public partial class Enemy : Character
 
 		//set different node responsible for movement
 
-
+		SetShaderMaterial();
 	}
+
+	private void SetShaderMaterial()
+	{
+		sm = new ShaderMaterial();
+
+		Shader shader = GD.Load<Shader>("res://shaders/EnemyShader.gdshader");
+		sm.Shader = shader;
+		sm.SetShaderParameter("flash_color", Colors.Red);
+		
+		GetNode<Sprite2D>("Sprite2D").Material = sm;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		if (DirectionProvider != null)
@@ -42,4 +56,16 @@ public partial class Enemy : Character
 		Console.WriteLine("Emmited Enemy Death After");
 		base.Die();
 	}
+
+	internal async void DamageFlash()
+	{
+		if (_isFlashing) return;
+
+		_isFlashing = true;
+		sm.SetShaderParameter("active", true);
+		await ToSignal(GetTree().CreateTimer(flashTime), SceneTreeTimer.SignalName.Timeout);
+		sm.SetShaderParameter("active", false);
+		_isFlashing = false;
+	}
+
 }

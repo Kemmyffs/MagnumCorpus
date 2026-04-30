@@ -14,20 +14,16 @@ size = Vector2(16, 7)
 collision_layer = 33
 collision_mask = 33
 script = ExtResource("1_aus4a")
-ChaseRadius = 100
-ChargesAmountInFullBar = null
+ChaseRadius = 150
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("1_8vr46")]
 MaxHealth = 5
-SpecialBarRechargeTime = null
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("2_aus4a")]
 
 [node name="ChaseComponent" parent="." unique_id=861140757 instance=ExtResource("3_0hi7k")]
 
 [node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_rodjt")]
-AttackOffset = null
-Damage = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1868417412]
 position = Vector2(0, 1.5)
