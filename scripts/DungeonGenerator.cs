@@ -40,9 +40,6 @@ public partial class DungeonGenerator : Node2D
         RoomGrid_Icons = new RoomMapIcon[WorldSize.X, WorldSize.Y];
         RoomGrid_Prefabs = new RoomPrefab[WorldSize.X, WorldSize.Y];
         CenterRoomCoords = new Vector2I(WorldSize.X / 2, WorldSize.Y / 2);
-        
-        //Connect("CalculatedTotalEnemyCount", new Callable(PlayerNode.GetNode<Hud>("CanvasLayer/HUD"), "UpdateEnemyCounter"));
-        //Connect("FinishedGeneration", new Callable(PlayerNode.GetNode<Hud>("CanvasLayer/HUD"), "GenerateMinimap"));
         Hud hud = PlayerNode.GetNode<Hud>("CanvasLayer/HUD");
         FinishedGeneration += hud.GenerateMinimap;
         CalculatedTotalEnemyCount += hud.UpdateEnemyCounter;
@@ -96,7 +93,7 @@ public partial class DungeonGenerator : Node2D
                 if (!IsInside(newPos)) continue;
                 if (RoomGrid_Icons[newPos.X, newPos.Y] != null) continue;
 
-                // Prevent blobs (IMPORTANT)
+                // Prevent blobs
                 if (CountNeighbors(newPos) > 1) continue;
 
                 PlaceRoom(newPos);
@@ -203,32 +200,11 @@ public partial class DungeonGenerator : Node2D
     {
         int width = grid.GetLength(0);
         int height = grid.GetLength(1);
-
-        var result = new bool[width * height];
-        int x = 0;
-        int y = 0;
-        for (x = 0; x < width; x++)
-        {
-            for (y = 0; y < height; y++)
-            {
-                if (grid[x, y] == null)
-                {
-                    result[x * height + y] = true;
-                }
-                else
-                {
-                    result[x * height + y] = false;
-                }
-            }
-        }
-        var godotResult = new Array<bool>(result);
-        Console.WriteLine("Emmiting Flat Grid");
-        EmitSignal(SignalName.FinishedGeneration, x, y);
+        EmitSignal(SignalName.FinishedGeneration, width, height);
     }
 
     private void SetFloorColor(Color desiredColor)
     {
-        //MapRoot.Modulate = desiredColor;
         foreach (RoomPrefab room in MapRoot.GetChildren())
         {
             room.TileMapBase.Modulate = desiredColor;
@@ -240,13 +216,11 @@ public partial class DungeonGenerator : Node2D
         return new Vector2(Rng.Next(32, 361), Rng.Next(32, 361));
     }
     public Vector2 RoomToGlobalCoords(Vector2 roomPosition, Vector2 roomCoords)
-{
-    // Access the prefab from your grid
-    var roomNode = RoomGrid_Prefabs[(int)roomPosition.X, (int)roomPosition.Y];
-    
-    // Use GlobalPosition of the room + the local random offset
-    return roomNode.GlobalPosition + roomCoords;
-}
+    {
+        var roomNode = RoomGrid_Prefabs[(int)roomPosition.X, (int)roomPosition.Y];
+
+        return roomNode.GlobalPosition + roomCoords;
+    }
 
 
 }

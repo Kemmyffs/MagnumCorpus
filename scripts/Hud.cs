@@ -52,8 +52,6 @@ public partial class Hud : Control
 
     public void GenerateMinimap(int x, int y)
 	{
-		Console.WriteLine("Generating Minimap From HUD");
-		//roomMapIconGrid = PlayerParent.GetParent()("DungeonGenerator").RoomGrid_Icons;
 		roomMapIconGrid = PlayerParent.GetParent<DungeonGenerator>().RoomGrid_Icons;
 		for (int i = 0; i < x; i++)
 		{
@@ -65,24 +63,6 @@ public partial class Hud : Control
 				}
 			}
 		}
-	}
-
-	bool[,] Reconstruct(bool[] grid, int x, int y, int height)
-	{
-		int width = x;
-		int h = height;
-
-		var reconstructed = new bool[width, h];
-
-		for (int ix = 0; ix < width; ix++)
-		{
-			for (int iy = 0; iy < h; iy++)
-			{
-				reconstructed[ix, iy] = grid[ix * h + iy];
-			}
-		}
-
-		return reconstructed;
 	}
 
 	public void OnEnemyDeath()

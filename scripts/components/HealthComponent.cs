@@ -53,7 +53,6 @@ public partial class HealthComponent : Component
 		{
 			double amountToAdd = (SpecialBarMaxValue / SpecialBarRechargeTime) * delta;
 
-			// 2. Apply and Clamp
 			SpecialBar.Value = Mathf.Clamp(SpecialBar.Value + amountToAdd, 0, SpecialBarMaxValue);
 		}
 	}

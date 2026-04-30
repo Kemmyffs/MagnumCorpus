@@ -12,24 +12,16 @@ public partial class EnemyRoot : Node2D
 		dungeonGenerator = GetParent<DungeonGenerator>();
 	}
 
-
-	//enemyRoot.GenerateEnemies(TempEnemyCount, RoomToGlobalCoords(pos, RandomRoomCoordinates()));
 	public void GenerateEnemies(int count, Vector2 roomPosition) // Pass room index, not final coords
 	{
 		for (int i = 0; i < count; i++)
 		{
-			// Generate a new random spot for EVERY enemy
 			Vector2 localCoords = dungeonGenerator.RandomRoomCoordinates();
 			Vector2 finalGlobalPos = dungeonGenerator.RoomToGlobalCoords(roomPosition, localCoords);
 
 			SpawnEnemy(GetRandomEnemyType(), finalGlobalPos);
 		}
 	}
-	/*public void GenerateEnemies(int count, GlobalScript.EnemyTypes type)
-	{
-		//TODO
-	}
-	*/
 
 	private void SpawnEnemy(GlobalScript.EnemyTypes enemyType, Vector2 globalPosition)
 	{
