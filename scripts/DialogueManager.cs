@@ -29,7 +29,7 @@ public partial class DialogueManager : Control
     private bool enemyDied = false;
     private bool enemyShouldveDied = false;
     private bool secondRoomEntered = false;
-    private bool lastRoomEntered=false;
+    private bool lastRoomEntered = false;
     public void init()
     {
         DialogueLabel = GetNode<RichTextLabel>("DialogLabel");
@@ -38,7 +38,7 @@ public partial class DialogueManager : Control
 
     public override void _Input(InputEvent @event)
     {
-        if(!Visible) return;
+        if (!Visible) return;
         if (Input.IsActionJustPressed("ui_accept"))
         {
             if (isTyping)
@@ -57,28 +57,28 @@ public partial class DialogueManager : Control
     public override void _Process(double delta)
     {
 
-        if(ContinueEventTriggered(continueCondition))
+        if (ContinueEventTriggered(continueCondition))
         {
             DisplayDialogue();
         }
 
-        
+
     }
 
 
     private bool ContinueEventTriggered(string condition)
-    {       
-            switch (condition)
-            {
-                case "Attack": return Input.IsActionJustPressed("plr_attack");
-                case "EnemyFailedDeath": return enemyShouldveDied;
-                case "EnemyDeath": return enemyDied;
-                case "SecondRoomEntered": return secondRoomEntered;
-                case "TriedDashing": return Input.IsActionJustReleased("plr_charge");
-                case "LastRoomEntered": return lastRoomEntered;
-                case "ResponseWindow": return false;
-            }
-            return false;
+    {
+        switch (condition)
+        {
+            case "Attack": return Input.IsActionJustPressed("plr_attack");
+            case "EnemyFailedDeath": return enemyShouldveDied;
+            case "EnemyDeath": return enemyDied;
+            case "SecondRoomEntered": return secondRoomEntered;
+            case "TriedDashing": return Input.IsActionJustReleased("plr_charge");
+            case "LastRoomEntered": return lastRoomEntered;
+            case "ResponseWindow": return false;
+        }
+        return false;
 
     }
 
@@ -86,7 +86,8 @@ public partial class DialogueManager : Control
     public async void DisplayDialogue()
     {
         if (isTyping) return;
-        if(currentIndex == 33) {
+        if (currentIndex == 33)
+        {
             GetTree().ChangeSceneToFile("res://scenes/ui/main_menu.tscn");
         }
 
@@ -208,6 +209,7 @@ public partial class DialogueManager : Control
 
     public void _on_area_2d_body_entered(Node2D body)
     {
+        GD.Print(body);
         secondRoomEntered = true;
     }
 

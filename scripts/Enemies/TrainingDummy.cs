@@ -9,17 +9,18 @@ public partial class TrainingDummy : Character
     [Signal] public delegate void OnFalseDeathEventHandler();
     public override void Die()
     {
-        if(!falseDied)
+        if (!falseDied)
         {
             EmitSignal("OnFalseDeath");
-            _healthComponent.Heal(5);
+            _healthComponent.Heal(_healthComponent.MaxHealth);
             falseDied = true;
-        } else
+        }
+        else
         {
             EmitSignal("OnDeath");
             base.Die();
         }
-        
+
     }
 
 }

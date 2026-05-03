@@ -61,7 +61,8 @@ tile_set = SubResource("TileSet_bdpbv")
 
 [node name="TrainingDummy" parent="Enemies" unique_id=1889153279 instance=ExtResource("3_q0lni")]
 position = Vector2(336, 88)
-Team = null
+BaseSpeed = 200.0
+ChargesAmountInFullBar = 5
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemies/TrainingDummy" unique_id=1289719097]
 position = Vector2(104, 72)
@@ -71,18 +72,21 @@ shape = SubResource("RectangleShape2D_ne0tq")
 position = Vector2(912, 160)
 
 [node name="Player" parent="." unique_id=1962636832 instance=ExtResource("1_8bem6")]
-position = Vector2(216, 136)
-ChargeDelay = null
-BaseSpeed = null
-ChargesAmountInFullBar = null
-Team = null
+position = Vector2(224, 155)
 
-[node name="MoveComponent" parent="Player" index="1" unique_id=1936515493]
-DashForce = null
-DashDecay = null
-Acceleration = null
-Friction = null
-ChargeFriction = null
+[node name="AttackComponent" parent="Player" index="2" unique_id=977282940]
+AttackType = 0
+AttackOffset = 0
+
+[node name="Camera2D" parent="Player" index="4" unique_id=1221219680]
+limit_left = -64
+limit_top = -48
+limit_right = 1152
+limit_bottom = 384
+
+[node name="Sprite2D" parent="Player" index="7" unique_id=1456656584]
+Target = 0.5
+TintSpeed = 0.5
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1107582717]
 
@@ -90,6 +94,8 @@ ChargeFriction = null
 position = Vector2(756, 168)
 shape = SubResource("RectangleShape2D_q0lni")
 
+[connection signal="OnDeath" from="Enemies/TrainingDummy" to="Player/CanvasLayer/HUD/DialogManager" method="_on_training_dummy_on_death"]
+[connection signal="OnFalseDeath" from="Enemies/TrainingDummy" to="Player/CanvasLayer/HUD/DialogManager" method="_on_training_dummy_on_false_death"]
 [connection signal="body_entered" from="Area2D" to="Player/CanvasLayer/HUD/DialogManager" method="_on_area_2d_body_entered"]
 
 [editable path="Player"]
