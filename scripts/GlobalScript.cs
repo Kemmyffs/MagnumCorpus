@@ -7,6 +7,7 @@ using System.Collections.Generic;
 //[GlobalClass]
 public static partial class GlobalScript : Object
 {
+	public enum Team { Player, Enemy }
 	public enum EnemyTypes
 	{
 		//salt_shaker,
@@ -14,6 +15,13 @@ public static partial class GlobalScript : Object
 		//ghost,
 		mouldling
 	};
+
+	public enum AttackTypes
+	{
+		Slash,
+		Touch,
+		GroundSlam
+	}
 
 	public static Dictionary<string, Flavor> AllFlavors = new Dictionary<string, Flavor>()
 	{

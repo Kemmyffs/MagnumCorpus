@@ -25,7 +25,7 @@ public partial class Hud : Control
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
 		EnemiesLeftProgressbar = GetNode<EnemyCounterProgress>("TextureRect//ColorRect");
 
-		enemyRoot = PlayerParent.GetParent<DungeonGenerator>().GetNode<EnemyRoot>("EnemyRoot");
+
 
 		if (GetTree().CurrentScene.Name == "TutorialMap")
 		{
@@ -36,6 +36,7 @@ public partial class Hud : Control
 		}
 		else
 		{
+			enemyRoot = PlayerParent.GetParent<DungeonGenerator>().GetNode<EnemyRoot>("EnemyRoot");
 			GetNode<DialogueManager>("DialogManager").Visible = false;
 			//GetNode<DialogueManager>("DialogManager").QueueFree();
 		}
@@ -53,7 +54,7 @@ public partial class Hud : Control
 		EnemiesLeftProgressbar.GraduallyIncrementEnemyProgressBar(fillPercentage);
 	}
 
-    public void GenerateMinimap(int x, int y)
+	public void GenerateMinimap(int x, int y)
 	{
 		roomMapIconGrid = PlayerParent.GetParent<DungeonGenerator>().RoomGrid_Icons;
 		for (int i = 0; i < x; i++)

@@ -10,41 +10,35 @@
 [ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="19_2sux5"]
 [ext_resource type="PackedScene" uid="uid://c4vu8ia4v14x1" path="res://components/health_component.tscn" id="20_iqfnf"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rfka"]
-shader = ExtResource("2_i825w")
-shader_parameter/tint_color = Color(1, 0, 0, 1)
-shader_parameter/blip_color = Color(1, 1, 1, 1)
-shader_parameter/blip_strength = 1.0
-shader_parameter/intensity = 0.50000002375
-shader_parameter/amplitude = 0.0
-shader_parameter/speed = 0.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykyjo"]
 radius = 9.0
 height = 26.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rfka"]
+shader = ExtResource("2_i825w")
+shader_parameter/tint_color = Color(1, 0, 0, 1)
+shader_parameter/blip_color = Color(1, 1, 1, 1)
+shader_parameter/blip_strength = 0.0
+shader_parameter/intensity = 0.0
+shader_parameter/amplitude = 0.0
+shader_parameter/speed = 0.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1962636832]
+collision_layer = 33
+collision_mask = 33
 motion_mode = 1
 script = ExtResource("1_ykyjo")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1456656584]
-material = SubResource("ShaderMaterial_3rfka")
-texture = ExtResource("1_eqqp1")
-hframes = 8
-script = ExtResource("4_i8sra")
-Target = null
-TintSpeed = null
-
-[node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
-ChargeFriction = 250.0
-
-[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_cyhxw")]
-AttackOffset = null
-Damage = 10
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("20_iqfnf")]
 MaxHealth = 50
 SpecialBarRechargeTime = 15.0
+
+[node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
+
+[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_cyhxw")]
+AttackType = null
+AttackOffset = null
+Damage = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643263794]
 
@@ -68,3 +62,11 @@ shape = SubResource("CapsuleShape2D_ykyjo")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1390526826]
 stream = ExtResource("9_i8sra")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1456656584]
+material = SubResource("ShaderMaterial_3rfka")
+texture = ExtResource("1_eqqp1")
+hframes = 8
+script = ExtResource("4_i8sra")
+Target = null
+TintSpeed = null

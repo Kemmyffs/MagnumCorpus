@@ -16,28 +16,27 @@ collision_layer = 33
 collision_mask = 33
 motion_mode = 1
 script = ExtResource("1_jdfho")
-ChaseRadius = 120
+ChaseRadius = 100
 BaseSpeed = 100.0
-ChargesAmountInFullBar = null
+Team = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1092338224]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_hksnt")
+[node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("2_jdfho")]
+position = Vector2(0, 2)
+MaxHealth = 50
+
+[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_50arw")]
+AttackType = 1
+Damage = 5
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("3_kanyp")]
 Friction = 100.0
 ChargeFriction = 0.0
 
-[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_50arw")]
-AttackOffset = null
-Damage = null
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1092338224]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_hksnt")
 
 [node name="ChaseComponent" parent="." unique_id=861140757 instance=ExtResource("5_8wrpm")]
-
-[node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("2_jdfho")]
-position = Vector2(0, 2)
-MaxHealth = 50
-SpecialBarRechargeTime = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395073809]
 texture = ExtResource("1_m2iwu")

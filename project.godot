@@ -64,6 +64,11 @@ plr_right={
 [layer_names]
 
 2d_physics/layer_2="Layer 2 (Dash Ghost)"
+2d_physics/layer_9="Player Hurtbox (Dash Ghost)"
+2d_physics/layer_10="Player Hitbox"
+2d_physics/layer_11="Player Hurtbox"
+2d_physics/layer_12="Enemy Hitbox"
+2d_physics/layer_13="Enemy Hurtbox"
 
 [physics]
 

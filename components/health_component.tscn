@@ -51,6 +51,8 @@ step = 0.01
 texture_progress = SubResource("AtlasTexture_m8208")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1219289255]
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=282062039]
 unique_name_in_owner = true

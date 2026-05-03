@@ -36,6 +36,16 @@ public partial class HealthComponent : Component
 			SpecialBar = GetNode<TextureProgressBar>("SpecialBar");
 		}
 
+		/*
+		Hurtbox.Monitorable = true;
+		Hurtbox.Monitoring = false;
+		Hurtbox.CollisionLayer = 0;
+		Hurtbox.CollisionMask = 0;
+		int layer = (Team == GlobalScript.Team.Player) ? 11 : 13;
+		Hurtbox.SetCollisionLayerValue(layer, true);
+		*/
+
+
 		HealthBar.MaxValue = MaxHealth;
 		HealthBar.MinValue = 0;
 		CurrentHealth = MaxHealth;
@@ -63,10 +73,11 @@ public partial class HealthComponent : Component
 		CurrentHealth -= dmg;
 		if (CurrentHealth <= 0) Parent.Die();
 		HealthBar.Value = CurrentHealth;
-		
-		if(Parent.GetType() != typeof(Player))
+
+		//Player doesn't flash
+		if (Parent.GetType() != typeof(Player))
 		{
-			Enemy tmp = (Enemy) Parent;
+			Enemy tmp = (Enemy)Parent;
 			tmp.DamageFlash();
 		}
 	}
@@ -92,6 +103,7 @@ public partial class HealthComponent : Component
 		if (area.Name == "Hitbox")
 		{
 			if (area.GetParent().GetParent<Character>() == this.GetParent<Character>()) return;
+			if (area.GetParent().GetParent<Character>().Team == Team) return;
 			Character attacker = area.GetParent().GetParent<Character>();
 			Damage(attacker._attackComponent.Damage);
 		}

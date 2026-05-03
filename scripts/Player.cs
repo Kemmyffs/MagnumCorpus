@@ -2,11 +2,13 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Linq;
+using System.Reflection.Metadata;
 
 public partial class Player : Character
 {
 	public Vector2 LastDirection { get; private set; } = Vector2.Right;
 	[Export] public float ChargeDelay = 5.0f;
+
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -28,10 +30,10 @@ public partial class Player : Character
 			}
 		if (Input.IsActionJustReleased("plr_charge"))
 		{
-			
+
 			_moveComponent.StopCharge();
 			_moveComponent.Dash(LastDirection);
-			
+
 		}
 
 		if (Input.IsActionJustPressed("plr_attack"))
@@ -44,5 +46,13 @@ public partial class Player : Character
 			GetTree().Quit();
 		}
 	}
+
+	public override void Die()
+	{
+		GetNode<AnimatedSprite2D>("AttackComponent/AnimatedSprite2D").Stop();
+		BaseSpeed = 0;
+		GetNode<AnimationPlayer>("CanvasLayer/HUD/AnimationPlayer").Play("transition_out");
+	}
+
 
 }

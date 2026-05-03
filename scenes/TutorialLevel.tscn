@@ -47,7 +47,7 @@ sources/0 = SubResource("TileSetAtlasSource_p21b5")
 size = Vector2(16, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q0lni"]
-size = Vector2(8, 304)
+size = Vector2(8, 288)
 
 [node name="TutorialMap" type="Node2D" unique_id=963074564]
 script = ExtResource("1_ne0tq")
@@ -61,6 +61,7 @@ tile_set = SubResource("TileSet_bdpbv")
 
 [node name="TrainingDummy" parent="Enemies" unique_id=1889153279 instance=ExtResource("3_q0lni")]
 position = Vector2(336, 88)
+Team = null
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Enemies/TrainingDummy" unique_id=1289719097]
 position = Vector2(104, 72)
@@ -71,6 +72,17 @@ position = Vector2(912, 160)
 
 [node name="Player" parent="." unique_id=1962636832 instance=ExtResource("1_8bem6")]
 position = Vector2(216, 136)
+ChargeDelay = null
+BaseSpeed = null
+ChargesAmountInFullBar = null
+Team = null
+
+[node name="MoveComponent" parent="Player" index="1" unique_id=1936515493]
+DashForce = null
+DashDecay = null
+Acceleration = null
+Friction = null
+ChargeFriction = null
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1107582717]
 
@@ -78,8 +90,6 @@ position = Vector2(216, 136)
 position = Vector2(756, 168)
 shape = SubResource("RectangleShape2D_q0lni")
 
-[connection signal="OnDeath" from="Enemies/TrainingDummy" to="Player/CanvasLayer/HUD/DialogManager" method="_on_training_dummy_on_death"]
-[connection signal="OnFalseDeath" from="Enemies/TrainingDummy" to="Player/CanvasLayer/HUD/DialogManager" method="_on_training_dummy_on_false_death"]
 [connection signal="body_entered" from="Area2D" to="Player/CanvasLayer/HUD/DialogManager" method="_on_area_2d_body_entered"]
 
 [editable path="Player"]

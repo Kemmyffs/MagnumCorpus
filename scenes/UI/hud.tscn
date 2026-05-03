@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://dwp0wqjwouedd" path="res://fonts/dogicapixel.ttf" id="7_xh8q5"]
 [ext_resource type="Texture2D" uid="uid://76vdkebbq3mo" path="res://textures/programmerArt/plrSpecialbar.png" id="8_d15ok"]
 [ext_resource type="Shader" uid="uid://du0srvv1nvp21" path="res://shaders/transitions/DiamondSweep.gdshader" id="12_kj32l"]
+[ext_resource type="Texture2D" uid="uid://bhsrk6af0pkhs" path="res://textures/programmerArt/loadingScreenPlaceholder.png" id="14_qe851"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t6axx"]
 shader = ExtResource("2_kj32l")
@@ -40,7 +41,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("LoadingScreenRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -52,7 +53,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/path = NodePath("LoadingScreenRect:material:shader_parameter/fill")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -67,7 +68,7 @@ resource_name = "transition_in"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("LoadingScreenRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -79,7 +80,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/path = NodePath("LoadingScreenRect:material:shader_parameter/fill")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -94,7 +95,7 @@ resource_name = "transition_out"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("LoadingScreenRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -106,7 +107,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TransitionRect:material:shader_parameter/fill")
+tracks/1/path = NodePath("LoadingScreenRect:material:shader_parameter/fill")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -194,6 +195,7 @@ offset_left = 880.0
 offset_top = 16.0
 offset_right = 1136.0
 offset_bottom = 272.0
+use_top_left = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="MapCenterContainer" unique_id=253969346]
 scale = Vector2(3, 3)
@@ -251,7 +253,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="TransitionRect" type="ColorRect" parent="." unique_id=523555000]
+[node name="LoadingScreenRect" type="TextureRect" parent="." unique_id=1697720428]
 material = SubResource("ShaderMaterial_0fcg2")
 layout_mode = 1
 anchors_preset = 15
@@ -259,7 +261,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.32941177, 0.6901961, 0.57254905, 1)
+texture = ExtResource("14_qe851")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=265804921]
 libraries/ = SubResource("AnimationLibrary_w414h")

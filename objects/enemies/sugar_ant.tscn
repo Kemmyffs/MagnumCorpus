@@ -15,15 +15,17 @@ collision_layer = 33
 collision_mask = 33
 script = ExtResource("1_aus4a")
 ChaseRadius = 150
+Team = 1
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("1_8vr46")]
-MaxHealth = 15
+MaxHealth = 1
+
+[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_rodjt")]
+AttackType = 1
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("2_aus4a")]
 
 [node name="ChaseComponent" parent="." unique_id=861140757 instance=ExtResource("3_0hi7k")]
-
-[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_rodjt")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1868417412]
 position = Vector2(0, 1.5)

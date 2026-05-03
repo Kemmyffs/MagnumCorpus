@@ -3,6 +3,7 @@ using Godot;
 
 public partial class Enemy : Character
 {
+
 	private Player playerNode;
 	[Export] public int ChaseRadius;
 	[Signal] public delegate void JustDiedEventHandler();

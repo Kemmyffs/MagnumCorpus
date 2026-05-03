@@ -4,12 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://b6jxa1jjttsnd" path="res://textures/assets/Training Dummy Sprite Sheet.png" id="1_ocgie"]
 [ext_resource type="PackedScene" uid="uid://c4vu8ia4v14x1" path="res://components/health_component.tscn" id="2_uynn4"]
 [ext_resource type="PackedScene" uid="uid://xsadykqyqnkb" path="res://components/move_component.tscn" id="4_avl7w"]
+[ext_resource type="PackedScene" uid="uid://dq7kwtmd22lm8" path="res://components/attack_component.tscn" id="5_nho8c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uynn4"]
 radius = 11.0
 
 [node name="TrainingDummy" type="CharacterBody2D" unique_id=1889153279]
 script = ExtResource("1_avl7w")
+BaseSpeed = null
+ChargesAmountInFullBar = null
+Team = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1656794349]
 texture = ExtResource("1_ocgie")
@@ -21,5 +25,16 @@ shape = SubResource("CircleShape2D_uynn4")
 
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("2_uynn4")]
 MaxHealth = 50
+SpecialBarRechargeTime = null
 
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("4_avl7w")]
+DashForce = null
+DashDecay = null
+Acceleration = null
+Friction = null
+ChargeFriction = null
+
+[node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("5_nho8c")]
+AttackType = null
+AttackOffset = null
+Damage = null
