@@ -36,16 +36,6 @@ public partial class HealthComponent : Component
 			SpecialBar = GetNode<TextureProgressBar>("SpecialBar");
 		}
 
-		/*
-		Hurtbox.Monitorable = true;
-		Hurtbox.Monitoring = false;
-		Hurtbox.CollisionLayer = 0;
-		Hurtbox.CollisionMask = 0;
-		int layer = (Team == GlobalScript.Team.Player) ? 11 : 13;
-		Hurtbox.SetCollisionLayerValue(layer, true);
-		*/
-
-
 		HealthBar.MaxValue = MaxHealth;
 		HealthBar.MinValue = 0;
 		CurrentHealth = MaxHealth;

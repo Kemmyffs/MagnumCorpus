@@ -25,8 +25,6 @@ public partial class Hud : Control
 		SpecialBar = GetNode<TextureProgressBar>("TextureRect//SpecialBar"); //TODO
 		EnemiesLeftProgressbar = GetNode<EnemyCounterProgress>("TextureRect//ColorRect");
 
-
-
 		if (GetTree().CurrentScene.Name == "TutorialMap")
 		{
 			GetNode<DialogueManager>("DialogManager").Visible = true;
@@ -67,6 +65,7 @@ public partial class Hud : Control
 				}
 			}
 		}
+
 		Sprite2D miniMapSprite = TilemapToSpriteGenerator.ConvertToSprite(TileMapLayer);
 		CenterContainer cc = GetNode<CenterContainer>("MapCenterContainer");
 		miniMapSprite.Scale = Vector2.One * 3;

@@ -22,25 +22,9 @@ public partial class AttackComponent : Component
 		base._Ready();
 
 		ResolveSetupByAttackType();
-		// Ano, já vím. Ano, tak to má být
-		// Z tohohle ready potřebuju odejít,
-		// aby se dodělaly jiné ready (například
-		// Parentova) a tím se až může
-		// dokončit ta funkce
-		// ResolveSetupByAttackType protože
-		// přesně na to čeká
-
-		//12 10 11 13
-		/*
-		Hitbox.Monitorable = false;
-		Hitbox.Monitoring = true;
-		Hitbox.CollisionLayer = 0;
-		Hitbox.CollisionMask = 0;
-		int layer = (Team == GlobalScript.Team.Player) ? 10 : 12;
-		int mask = (Team == GlobalScript.Team.Player) ? 13 : 11;
-		Hitbox.SetCollisionLayerValue(layer, true);
-		Hitbox.SetCollisionMaskValue(mask, true);
-		*/
+		// Ano, já vím. Ano, tak to má být. Z tohohle ready potřebuju odejít,
+		// aby se dodělaly jiné ready (například Parentova) a tím se až může
+		// dokončit ta funkce ResolveSetupByAttackType, protože přesně na to čeká
 
 	}
 
@@ -52,13 +36,11 @@ public partial class AttackComponent : Component
 		if (AttackType == GlobalScript.AttackTypes.Touch)
 		{
 			await ToSignal(Parent, Node.SignalName.Ready);
-			/*
+
 			Node a = Parent.MoveCollisionShape.Duplicate();
 			HitboxShape.ReplaceBy(a);
 			a.QueueFree();
-			*/
-			HitboxShape = Parent.MoveCollisionShape;
-			HitboxShape.Disabled = false;
+			HitboxShape.Disabled = false; //vždycky aktivní
 			_attackProcess = ProcessConsistentAttacks;
 		}
 		else
