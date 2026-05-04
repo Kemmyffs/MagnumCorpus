@@ -36,8 +36,6 @@ SpecialBarRechargeTime = 15.0
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("19_2sux5")]
 
 [node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_cyhxw")]
-AttackType = null
-AttackOffset = null
 Damage = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=643263794]
@@ -68,5 +66,3 @@ material = SubResource("ShaderMaterial_3rfka")
 texture = ExtResource("1_eqqp1")
 hframes = 8
 script = ExtResource("4_i8sra")
-Target = null
-TintSpeed = null

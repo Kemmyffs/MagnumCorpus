@@ -95,8 +95,7 @@ public partial class MoveComponent : Component
 
 	public void Dash(Vector2 direction)
 	{
-		if (direction == Vector2.Zero)
-			return;
+		if (direction == Vector2.Zero) return;
 		if (Parent._healthComponent.hasEnoughSpecial(Parent.ChargesAmountInFullBar))
 		{
 			Parent._healthComponent.ToggleHurtbox(false);
@@ -107,6 +106,8 @@ public partial class MoveComponent : Component
 
 	public void Dash(Vector2 direction, float knockBackStrenght)
 	{
+		if (direction == Vector2.Zero) return;
+		Parent._healthComponent.ToggleHurtbox(false);
 		_dashVelocity = direction.Normalized() * knockBackStrenght;
 	}
 

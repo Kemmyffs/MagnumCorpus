@@ -6,8 +6,15 @@ using System.Reflection.Metadata;
 
 public partial class Player : Character
 {
+	[Signal] public delegate void OnPlayerDeathEventHandler();
 	public Vector2 LastDirection { get; private set; } = Vector2.Right;
 	[Export] public float ChargeDelay = 5.0f;
+
+	public override void _Ready()
+	{
+		base._Ready();
+		Connect("OnPlayerDeath", new Callable(GetParent().GetParent<FloorManager>(), "FailFloor"));
+	}
 
 
 	public override void _PhysicsProcess(double delta)
@@ -51,7 +58,8 @@ public partial class Player : Character
 	{
 		GetNode<AnimatedSprite2D>("AttackComponent/AnimatedSprite2D").Stop();
 		BaseSpeed = 0;
-		GetNode<AnimationPlayer>("CanvasLayer/HUD/AnimationPlayer").Play("transition_out");
+		EmitSignal("OnPlayerDeath");
+		//GetNode<AnimationPlayer>("CanvasLayer/HUD/AnimationPlayer").Play("transition_out");
 	}
 
 

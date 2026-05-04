@@ -220,6 +220,8 @@ public partial class DungeonGenerator : Node2D
         if (enemyRoot.CurrentEnemyCount == 0)
         {
             //FLOOR END
+            FloorManager floorMgr = GetParent<FloorManager>();
+            floorMgr.FinishFloor();
         }
     }
     #endregion

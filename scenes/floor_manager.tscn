@@ -2,8 +2,31 @@
 
 [ext_resource type="Script" uid="uid://s7vv7sgmhwvc" path="res://scripts/FloorManager.cs" id="1_6ieux"]
 [ext_resource type="PackedScene" uid="uid://de08hpuk2aafl" path="res://objects/rooms/dungeon_generator.tscn" id="1_yxkdn"]
+[ext_resource type="Shader" uid="uid://dymuvgb300kad" path="res://scenes/FloorManager.gdshader" id="3_p6a6o"]
+[ext_resource type="Texture2D" uid="uid://bhsrk6af0pkhs" path="res://textures/programmerArt/loadingScreenPlaceholder.png" id="4_2mre0"]
+[ext_resource type="Texture2D" uid="uid://cr1cxphm1ps73" path="res://textures/programmerArt/iconShape.png" id="4_feac6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mre0"]
+shader = ExtResource("3_p6a6o")
+shader_parameter/hole_texture = ExtResource("4_feac6")
+shader_parameter/iris_progress = 0.0
+shader_parameter/hole_center = Vector2(0.5, 0.5)
 
 [node name="FloorManager" type="Node2D" unique_id=1642133892]
 script = ExtResource("1_6ieux")
 
 [node name="DungeonGenerator" parent="." unique_id=1318291132 instance=ExtResource("1_yxkdn")]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=620398703]
+enabled = false
+zoom = Vector2(2, 2)
+limit_enabled = false
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D" unique_id=1341425255]
+material = SubResource("ShaderMaterial_2mre0")
+offset_left = -288.0
+offset_top = -162.0
+offset_right = 864.0
+offset_bottom = 486.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_2mre0")
