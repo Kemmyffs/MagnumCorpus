@@ -21,6 +21,7 @@ motion_mode = 1
 script = ExtResource("1_jdfho")
 ChaseRadius = 100
 BaseSpeed = 100.0
+ChargesAmountInFullBar = null
 Team = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395073809]
@@ -29,12 +30,14 @@ texture = ExtResource("1_m2iwu")
 [node name="HealthComponent" parent="." unique_id=1008080549 instance=ExtResource("2_jdfho")]
 position = Vector2(0, 2)
 MaxHealth = 50
+SpecialBarRechargeTime = null
 
 [node name="CollisionShape2D" parent="HealthComponent/Hurtbox" parent_id_path=PackedInt32Array(1008080549, 1219289255) index="0" unique_id=282062039]
 position = Vector2(0, 1)
 
 [node name="AttackComponent" parent="." unique_id=977282940 instance=ExtResource("4_50arw")]
 AttackType = 1
+AttackOffset = null
 Damage = 5
 
 [node name="CollisionShape2D" parent="AttackComponent/Hitbox" parent_id_path=PackedInt32Array(977282940, 972727934) index="0" unique_id=1026052232]
@@ -44,7 +47,6 @@ shape = SubResource("CapsuleShape2D_jdfho")
 [node name="MoveComponent" parent="." unique_id=1936515493 instance=ExtResource("3_kanyp")]
 visible = false
 Friction = 100.0
-ChargeFriction = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1092338224]
 position = Vector2(0, 3)

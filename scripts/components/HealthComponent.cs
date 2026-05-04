@@ -11,6 +11,7 @@ public partial class HealthComponent : Component
 	private TextureProgressBar SpecialBar;
 	private Area2D Hurtbox;
 	[Export] public int MaxHealth;
+	[Export] public float KnockbackBaseStrenght = 200;
 	public int CurrentHealth { get; set; }
 	[Export] public float SpecialBarRechargeTime = 10.0f;
 	public double SpecialBarMaxValue = 100;
@@ -99,13 +100,18 @@ public partial class HealthComponent : Component
 			if (area.GetParent().GetParent<Character>().Team == Team) return;
 			Character attacker = area.GetParent().GetParent<Character>();
 			Damage(attacker._attackComponent.Damage);
+			KnockBack(area);
 		}
 	}
 
-	internal bool hasEnoughSpecial(float singleActionCost)
+	private void KnockBack(Area2D area)
 	{
-		return SpecialBar.Value > SpecialBar.MaxValue / singleActionCost;
+		Character attacker = area.GetParent().GetParent<Character>();
+		Vector2 knockBackDirection = (Parent.GlobalPosition - attacker.GlobalPosition).Normalized();
+		Parent._moveComponent.Dash(knockBackDirection, (attacker._attackComponent.Damage) + KnockbackBaseStrenght);
+
 	}
+
 
 
 	private async Task ReshapeHurtboxAsync()
@@ -116,4 +122,15 @@ public partial class HealthComponent : Component
 			Hurtbox.GetNode<CollisionShape2D>("CollisionShape2D").Shape = ShapeManipulator.CopyExpandedShape(Parent.MoveCollisionShape.Shape);
 		}
 	}
+
+	internal bool hasEnoughSpecial(float singleActionCost)
+	{
+		return SpecialBar.Value > SpecialBar.MaxValue / singleActionCost;
+	}
+
+	public void ToggleHurtbox(bool enabled)
+	{
+		Hurtbox.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = !enabled;
+	}
+
 }

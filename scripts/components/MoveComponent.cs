@@ -15,6 +15,7 @@ public partial class MoveComponent : Component
 
 	private bool _isCharging = false;
 	private bool _isDashing = false;
+	private bool _isKnockBack = false;
 
 	public Vector2 DesiredDirection { get; set; } = Vector2.Zero;
 
@@ -69,6 +70,10 @@ public partial class MoveComponent : Component
 				DashDecay * d
 			);
 		}
+		else
+		{
+			Parent._healthComponent.ToggleHurtbox(true);
+		}
 
 		Parent.SetCollisionMaskValue(1, !_isDashing);
 		Parent.SetCollisionMaskValue(2, _isDashing);
@@ -94,15 +99,21 @@ public partial class MoveComponent : Component
 			return;
 		if (Parent._healthComponent.hasEnoughSpecial(Parent.ChargesAmountInFullBar))
 		{
+			Parent._healthComponent.ToggleHurtbox(false);
 			Parent._healthComponent.SubtractSpecialBarValue(Parent.ChargesAmountInFullBar);
 			_dashVelocity = direction.Normalized() * DashForce;
 		}
+	}
 
+	public void Dash(Vector2 direction, float knockBackStrenght)
+	{
+		_dashVelocity = direction.Normalized() * knockBackStrenght;
 	}
 
 	public void StartCharge()
 	{
 		_isCharging = true;
+
 	}
 
 	public void StopCharge()
