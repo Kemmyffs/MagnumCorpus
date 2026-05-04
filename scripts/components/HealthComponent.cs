@@ -10,6 +10,7 @@ public partial class HealthComponent : Component
 	private TextureProgressBar HealthBar;
 	private TextureProgressBar SpecialBar;
 	private Area2D Hurtbox;
+	private CollisionShape2D HurtboxShape;
 	[Export] public int MaxHealth;
 	[Export] public float KnockbackBaseStrenght = 200;
 	public int CurrentHealth { get; set; }
@@ -21,6 +22,7 @@ public partial class HealthComponent : Component
 	{
 		base._Ready();
 		Hurtbox = GetNode<Area2D>("Hurtbox");
+		HurtboxShape = Hurtbox.GetNode<CollisionShape2D>("CollisionShape2D");
 
 		Hurtbox.AreaEntered += OnAreaEntered;
 
@@ -130,7 +132,7 @@ public partial class HealthComponent : Component
 
 	public void ToggleHurtbox(bool enabled)
 	{
-		Hurtbox.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = !enabled;
+		HurtboxShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, !enabled);
 	}
 
 }
